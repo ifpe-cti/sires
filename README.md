@@ -42,7 +42,7 @@ A monetização pode ser obtida pela manutenção, correção de erros ou desenv
 ## Licença
 MIT License (MIT)
 
-Copyright (C) 2019 SiReS Samuel Ferraz, Allan Bispo, Pedro Santana, Eric Sales
+Copyright (C) 2019 SIRES Samuel Ferraz, Allan Bispo, Pedro Santana, Eric Sales
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
