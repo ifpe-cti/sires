@@ -34,7 +34,7 @@ A monetização pode ser obtida pela manutenção, correção de erros ou desenv
 - Kanban
 
 ## Contribuidores
-- [@ssferraz](https://github.com/ssferraz) como Samuel Ferraz (Arquiteto)
+- [@ssferraz](https://github.com/ssferraz) como Samuel Ferraz (Desenvolvedor)
 - [@ADBispo](https://github.com/adbispo) como Allan Bispo (Desenvolvedor)
 - [@pedrovictor2](https://github.com/pedrovictor2) como Pedro Santana (Desenvolvedor)
 - [@esales](https://github.com/esales) como Eric Sales (Orientador)
