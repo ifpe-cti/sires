@@ -20,6 +20,19 @@ public class Sala {
 	@Column
 	private String tipo;
 	
+	public Sala() {
+		
+	}
+	
+	public Sala(int id, char bloco, String nome, String tipo) {
+		super();
+		this.id = id;
+		this.bloco = bloco;
+		this.nome = nome;
+		this.tipo = tipo;
+		
+	}
+	
 	public int getId() {
 		return id;
 	}
