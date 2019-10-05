@@ -6,6 +6,7 @@
 	<persistence-unit name="siresPU" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<class>com.github.ssferraz.sires.entity.Sala</class>
+		<class>com.github.ssferraz.sires.entity.Periodo</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="javax.persistence.jdbc.url"	value="jdbc:mysql://localhost:3306/sires" />
