@@ -35,4 +35,5 @@ hs_err_pid*
 # Maven
 target/
 lib
-/bin/
+bin
+src/m2e-wtp
