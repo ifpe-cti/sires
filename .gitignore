@@ -4,6 +4,7 @@
 .settings
 .classpath
 .recommenders
+.tern-project
 
 # Others
 .idea
