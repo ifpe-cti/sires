@@ -7,4 +7,7 @@ import javax.faces.bean.RequestScoped;
 @RequestScoped
 public class UsuarioBean {
 
+	private String siape;
+	private String senha;
+	
 }

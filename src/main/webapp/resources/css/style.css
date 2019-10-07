@@ -1,0 +1,39 @@
+body {
+	margin: 0;
+}
+
+#top {
+	background-color: black;
+	color: white;
+}
+
+#logo {
+	width: 60px;
+	height: 60px;
+}
+
+#logo-name {
+	vertical-align: 65%;
+	margin-left: 3px;
+	font-family: monospace;
+	font-weight: bold;
+	font-size: 25px;
+}
+
+#btnSair {
+	color: white;
+	vertical-align: 100%;
+	
+}
+
+#user-name{
+	vertical-align: 110%;
+	margin-left: 80%;
+	margin-right: 10px;
+}
+
+#menu{
+	background-color: rgb(47, 158, 65);
+	height: 35px;
+	
+}

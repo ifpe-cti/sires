@@ -77,16 +77,16 @@ text-align: right;
 				</div>
 				<h:panelGrid columns="2" width="100%" style="text-align:right">
 					<h:outputText value="Login:" />
-					<p:inputText id="inpLogin" value="">
+					<p:inputText id="inpLogin">
 					<f:passThroughAttribute name="placeholder" value="SIAPE" />
 					</p:inputText>
 				</h:panelGrid>
 				<h:panelGrid columns="2" width="100%" style="text-align:right">
 					<h:outputText value="Senha:" />
-					<p:password id="inpSenha" value="" />
+					<p:password id="inpSenha" />
 				</h:panelGrid>
 				<div id="div-btn">
-				<p:commandButton value="Visitante" styleClass="botao" />
+				<p:commandButton value="Visitante" action="index.xhtml?faces-redirect=true" ajax="false" styleClass="botao" />
 				<p:commandButton value="Acessar" styleClass="botao" />
 				</div>
 			</div>
