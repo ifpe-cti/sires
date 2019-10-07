@@ -27,6 +27,6 @@
     </session-config>
     
      <welcome-file-list>
-        <welcome-file>login.xhtml</welcome-file>
+        <welcome-file>telaLogin.xhtml</welcome-file>
     </welcome-file-list>
 </web-app>

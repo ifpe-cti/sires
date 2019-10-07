@@ -14,7 +14,7 @@ public class Usuario {
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private int id;
 	@Column
-	private String matricula;
+	private String siape;
 	@Column
 	private String senha;
 	@Column
@@ -28,19 +28,15 @@ public class Usuario {
 		
 	}
 	
-	
-	
-	public Usuario(int id, String matricula, String senha, String nome, String email, Categoria categoria) {
+	public Usuario(int id, String siape, String senha, String nome, String email, Categoria categoria) {
 		super();
 		this.id = id;
-		this.matricula = matricula;
+		this.siape = siape;
 		this.senha = senha;
 		this.nome = nome;
 		this.email = email;
 		this.categoria = categoria;
 	}
-
-
 
 	public int getId() {
 		return id;
@@ -48,11 +44,11 @@ public class Usuario {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public String getMatricula() {
-		return matricula;
+	public String getSiape() {
+		return siape;
 	}
-	public void setMatricula(String matricula) {
-		this.matricula = matricula;
+	public void setSiape(String siape) {
+		this.siape = siape;
 	}
 	public String getSenha() {
 		return senha;
@@ -72,7 +68,4 @@ public class Usuario {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
-	
-
 }
