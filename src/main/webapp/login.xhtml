@@ -8,43 +8,89 @@
 <h:head>
 	<title>Login</title>
 	<h:outputStylesheet library="css" name="bootstrap.css" />
-	<h:outputStylesheet library="css" name="bootstrap-theme.css" />
-	<h:outputStylesheet library="css" name="login.css" />
 	<style>
-.Bimage {
+.background {
 	background-image: url("resources/images/background.png");
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: 100% 100%;
+	color: white;
 }
+
+.botao {
+	position: relative;
+	background-color: #eeeeee;
+	color: #4d5258;
+	border-color: #b7b7b7;
+	cursor: pointer;
+	padding: 6px 10px;
+	font-size: 14px;
+	line-height: 1.3333333;
+	border-radius: 1px;
+	margin-top: 15px;
+	margin-left: 13px;
+}
+
+.content {
+	width: 100vw;
+	height: 100vh;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center
+}
+
+.box {
+	height: 300px;
+	flex-direction: row;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+}
+
+#logo {
+	opacity: 0.3;
+	text-align: center;
+}
+
+#logoName {
+	text-align: center;
+	margin-bottom: 25px;
+}
+
+#div-btn{
+text-align: right;
+}
+
 </style>
 </h:head>
-<h:body styleClass="Bimage">
-	<h:form>
-		<div id="logo-div">
-		<div id="logo">
-			<h:graphicImage  value="resources/images/logo-ifpe.png" />
-		</div>
-		<h1>SIRES</h1>
-		<h3>Sistema de Reserva de Salas</h3>
-		</div>
-		<div class="conteiner-div">
-		<div class = "fundo-div"></div>
-		<div class="texto-div">			
-		<h:outputText id="username" value="Usuário:" />
-			<br />
-			<h:inputText>
-			<f:passThroughAttribute name="placeholder" value="SIAPE" />
-			</h:inputText>
-			<br />
-			<h:outputText value="Senha:" />
-			<br />
-			<h:inputSecret />
-			<br />
-			<h:commandButton id="cmbLogin" value="Entrar" />
+<h:body styleClass="background">
+	<h:form styleClass="form">
+		<div class="content">
+			<div class="box">
+				<div id="logo">
+					<h:graphicImage value="resources/images/logo-ifpe.png" />
+				</div>
+				<div id="logoName">
+					<h1>SIRES</h1>
+					<h3>Sistema de Reserva de Salas</h3>
+				</div>
+				<h:panelGrid columns="2" width="100%" style="text-align:right">
+					<h:outputText value="Login:" />
+					<p:inputText id="inpLogin" value="">
+					<f:passThroughAttribute name="placeholder" value="SIAPE" />
+					</p:inputText>
+				</h:panelGrid>
+				<h:panelGrid columns="2" width="100%" style="text-align:right">
+					<h:outputText value="Senha:" />
+					<p:password id="inpSenha" value="" />
+				</h:panelGrid>
+				<div id="div-btn">
+				<p:commandButton value="Visitante" styleClass="botao" />
+				<p:commandButton value="Acessar" styleClass="botao" />
+				</div>
 			</div>
 		</div>
 	</h:form>
-
 </h:body>
 </html>
