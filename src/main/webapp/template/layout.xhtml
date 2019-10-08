@@ -22,15 +22,27 @@
 		</ui:insert>
 		<!-- <ui:include src="../menu.xhtml" /> -->
 	</div>
-	
-	<div id="menu" class="menu">
-		<ui:insert name="content">
-		
-		
+
+	<div id="menu">
+		<ui:insert name="menu">
+			<p:menubar id="menubar">
+				<p:submenu label="Home" icon="pi pi-home">
+
+					<p:menuitem value="Project" url="#" />
+					<p:menuitem value="Other" url="#" />
+
+				</p:submenu>
+				<p:submenu label="Home" icon="pi pi-file">
+				</p:submenu>
+				<p:submenu label="Home" icon="pi pi-file">
+				</p:submenu>
+				<p:submenu label="Home" icon="pi pi-file">
+				</p:submenu>
+			</p:menubar>
 		</ui:insert>
 	</div>
 
-	<div id="content" class="center_content container">
+	<div id="content">
 		<ui:insert name="content">Content</ui:insert>
 	</div>
 

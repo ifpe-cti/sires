@@ -23,17 +23,18 @@ body {
 #btnSair {
 	color: white;
 	vertical-align: 100%;
-	
 }
 
-#user-name{
+#user-name {
 	vertical-align: 110%;
 	margin-left: 80%;
 	margin-right: 10px;
 }
 
-#menu{
-	background-color: rgb(47, 158, 65);
-	height: 35px;
-	
+
+#menubar {
+	border: 1px solid #aed0ea !important;
+    background: #38B44A !important;
+    color: white !important;
+    font-weight: bolder !important
 }
