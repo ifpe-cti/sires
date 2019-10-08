@@ -25,29 +25,34 @@
 
 	<div id="menu">
 		<ui:insert name="menu">
-			<p:menubar id="menubar">
-				<p:submenu label="Home" icon="pi pi-home">
-
-					<p:menuitem value="Project" url="#" />
-					<p:menuitem value="Other" url="#" />
-
-				</p:submenu>
-				<p:submenu label="Home" icon="pi pi-file">
-				</p:submenu>
-				<p:submenu label="Home" icon="pi pi-file">
-				</p:submenu>
-				<p:submenu label="Home" icon="pi pi-file">
-				</p:submenu>
-			</p:menubar>
+			<form>
+				<p:menubar id="menubar">
+					<p:menuitem value="Home" url="index.xhtml" />
+					<p:submenu label="Reserva" icon="pi pi-file">
+						<p:menuitem value="Solicitar reserva" url="index.xhtml" />
+						<p:menuitem value="Cancelar reserva" url="index.xhtml" />
+						<p:menuitem value="Editar reserva" url="index.xhtml" />
+						<p:menuitem value="Listar reservas" url="index.xhtml" />
+					</p:submenu>
+					<p:menuitem value="Sala" url="index.xhtml" />
+					<p:submenu label="Home" icon="pi pi-file">
+					</p:submenu>
+				</p:menubar>
+			</form>
 		</ui:insert>
 	</div>
 
 	<div id="content">
-		<ui:insert name="content">Content</ui:insert>
+		<ui:insert name="content"></ui:insert>
 	</div>
 
 	<div id="bottom">
-		<ui:insert name="bottom">Bottom</ui:insert>
+		<ui:insert name="bottom">
+			<form>
+				<h:outputText id="logo-name" value="Desenvolvido por: Samuel Ferraz, Allan Bispo, Pedro Santana " />
+				<h:outputText id="logo-name" value="© 2019 SIRES" />
+			</form>
+		</ui:insert>
 	</div>
 </h:body>
 

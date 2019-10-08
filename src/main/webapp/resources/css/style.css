@@ -31,10 +31,21 @@ body {
 	margin-right: 10px;
 }
 
-
 #menubar {
-	border: 1px solid #aed0ea !important;
-    background: #38B44A !important;
-    color: white !important;
-    font-weight: bolder !important
+	border: 1px solid #38B44A !important;
+	background: #38B44A !important;
+	color: white !important;
+	font-weight: bolder !important;
+	border-radius: 0;
+}
+
+#bottom {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	background-color: black;
+	color: white;
+	text-align: center;
+	font-size: 10px;
+	font-family: times;
 }
