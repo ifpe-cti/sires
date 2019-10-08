@@ -20,6 +20,10 @@ public class Reserva {
 		
 	}
 
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public Reserva(int id, Pedido pedido) {
 		super();
 		this.id = id;
@@ -33,5 +37,10 @@ public class Reserva {
 	public void setPedido(Pedido pedido) {
 		this.pedido = pedido;
 	}
+
+	public int getId() {
+		return id;
+	}
+
 
 }
