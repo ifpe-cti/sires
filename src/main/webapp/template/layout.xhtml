@@ -10,6 +10,17 @@
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<h:outputStylesheet name="./css/style.css" />
 	<title>SIRES</title>
+
+	<style type="text/css">
+.ui-menubar {
+	border: 1px solid #38B44A !important;
+	background: #38B44A !important;
+	color: white !important;
+	font-weight: bolder !important;
+	border-radius: 0;
+}
+</style>
+
 </h:head>
 
 <h:body>
@@ -26,16 +37,19 @@
 	<div id="menu">
 		<ui:insert name="menu">
 			<form>
-				<p:menubar id="menubar">
-					<p:menuitem value="Home" url="index.xhtml" />
+				<p:menubar styleClass="ui-menubar">
+					<p:menuitem value="Home" url="index.xhtml" icon="pi pi-calendar"/>
 					<p:submenu label="Reserva" icon="pi pi-file">
 						<p:menuitem value="Solicitar reserva" url="index.xhtml" />
 						<p:menuitem value="Cancelar reserva" url="index.xhtml" />
 						<p:menuitem value="Editar reserva" url="index.xhtml" />
-						<p:menuitem value="Listar reservas" url="index.xhtml" />
+						<p:menuitem value="Visualizar reservas" url="index.xhtml" />
 					</p:submenu>
-					<p:menuitem value="Sala" url="index.xhtml" />
-					<p:submenu label="Home" icon="pi pi-file">
+					<p:submenu label="Sala" icon="pi pi-file">
+						<p:menuitem value="Adicionar sala" url="index.xhtml" />
+						<p:menuitem value="Remover sala" url="index.xhtml" />
+						<p:menuitem value="Atualizar sala" url="index.xhtml" />
+						<p:menuitem value="Listar salas" url="index.xhtml" />
 					</p:submenu>
 				</p:menubar>
 			</form>
@@ -49,8 +63,9 @@
 	<div id="bottom">
 		<ui:insert name="bottom">
 			<form>
-				<h:outputText id="logo-name" value="Desenvolvido por: Samuel Ferraz, Allan Bispo, Pedro Santana " />
-				<h:outputText id="logo-name" value="© 2019 SIRES" />
+				<h:outputText class="bottom-name"
+					value="Desenvolvido por: Samuel Ferraz, Allan Bispo, Pedro Santana " />
+				<h:outputText class="bottom-name" value="© 2019 SIRES" />
 			</form>
 		</ui:insert>
 	</div>
