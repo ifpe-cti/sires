@@ -12,6 +12,7 @@ public class SalaDAO {
 
 	private static SalaDAO instance;
 	protected EntityManager entityManager;
+	 private EntityManagerFactory emf = null;
 
 	public static SalaDAO getInstance() {
 		if (instance == null) {
@@ -85,5 +86,16 @@ public class SalaDAO {
 			ex.printStackTrace();
 		}
 	}
+
+	public void update(Sala sala) {
+
+		 EntityManager em = emf.createEntityManager();
+	        em.getTransaction().begin();
+	        em.merge(sala);
+	        em.getTransaction().commit();
+	        em.close();
+	}
+	
+	
 
 }
