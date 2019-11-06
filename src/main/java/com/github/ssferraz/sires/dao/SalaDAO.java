@@ -12,36 +12,36 @@ public class SalaDAO {
 
 	private static SalaDAO instance;
 	protected EntityManager entityManager;
-	 private EntityManagerFactory emf = null;
+	private EntityManagerFactory emf = null;
 
 	public static SalaDAO getInstance() {
 		if (instance == null) {
 			instance = new SalaDAO();
 		}
-
 		return instance;
 	}
 
-	private SalaDAO() {
+	public SalaDAO() {
 		entityManager = getEntityManager();
 	}
 
 	private EntityManager getEntityManager() {
-		EntityManagerFactory factory = Persistence.createEntityManagerFactory("crudHibernateSa");
+		emf = Persistence.createEntityManagerFactory("siresPU");
 		if (entityManager == null) {
-			entityManager = factory.createEntityManager();
+			entityManager = emf.createEntityManager();
 		}
-
 		return entityManager;
 	}
 
-	public Sala getById(final int id) {
+	public Sala getById(int id) {
 		return entityManager.find(Sala.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Sala> findAll() {
-		return entityManager.createQuery("Para " + Sala.class.getName()).getResultList();
+		List<Sala> listaRetorno = this.entityManager.createQuery("from " + Sala.class.getName()).getResultList();
+		this.entityManager.close();
+		return listaRetorno;
 	}
 
 	public void persist(Sala sala) {
@@ -55,7 +55,7 @@ public class SalaDAO {
 		}
 	}
 
-	public void merge(Sala sala) {
+	public void update(Sala sala) {
 		try {
 			entityManager.getTransaction().begin();
 			entityManager.merge(sala);
@@ -78,7 +78,7 @@ public class SalaDAO {
 		}
 	}
 
-	public void removeById(final int id) {
+	public void removeById(int id) {
 		try {
 			Sala sala = getById(id);
 			remove(sala);
@@ -86,16 +86,5 @@ public class SalaDAO {
 			ex.printStackTrace();
 		}
 	}
-
-	public void update(Sala sala) {
-
-		 EntityManager em = emf.createEntityManager();
-	        em.getTransaction().begin();
-	        em.merge(sala);
-	        em.getTransaction().commit();
-	        em.close();
-	}
-	
-	
 
 }

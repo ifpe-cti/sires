@@ -11,9 +11,7 @@ import javax.persistence.Query;
 
 import com.github.ssferraz.sires.dao.PersistenceDAO;
 import com.github.ssferraz.sires.dao.ReservaDAO;
-import com.github.ssferraz.sires.dao.SalaDAO;
 import com.github.ssferraz.sires.entity.Reserva;
-import com.github.ssferraz.sires.entity.Sala;
 
 	@ManagedBean
 	@RequestScoped

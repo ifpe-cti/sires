@@ -6,22 +6,22 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import com.github.ssferraz.sires.entity.Reserva;
+import com.github.ssferraz.sires.entity.Perfil;
 
-public class ReservaDAO {
+public class PerfilDAO {
 
-	private static ReservaDAO instance;
+	private static PerfilDAO instance;
 	protected EntityManager entityManager;
 	private EntityManagerFactory emf = null;
 
-	public static ReservaDAO getInstance() {
+	public static PerfilDAO getInstance() {
 		if (instance == null) {
-			instance = new ReservaDAO();
+			instance = new PerfilDAO();
 		}
 		return instance;
 	}
 
-	public ReservaDAO() {
+	public PerfilDAO() {
 		entityManager = getEntityManager();
 	}
 
@@ -33,21 +33,21 @@ public class ReservaDAO {
 		return entityManager;
 	}
 
-	public Reserva getById(int id) {
-		return entityManager.find(Reserva.class, id);
+	public Perfil getById(int id) {
+		return entityManager.find(Perfil.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Reserva> findAll() {
-		List<Reserva> listaRetorno = this.entityManager.createQuery("from " + Reserva.class.getName()).getResultList();
+	public List<Perfil> findAll() {
+		List<Perfil> listaRetorno = this.entityManager.createQuery("from " + Perfil.class.getName()).getResultList();
 		this.entityManager.close();
 		return listaRetorno;
 	}
 
-	public void persist(Reserva reserva) {
+	public void persist(Perfil perfil) {
 		try {
 			entityManager.getTransaction().begin();
-			entityManager.persist(reserva);
+			entityManager.persist(perfil);
 			entityManager.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -55,10 +55,10 @@ public class ReservaDAO {
 		}
 	}
 
-	public void update(Reserva reserva) {
+	public void update(Perfil perfil) {
 		try {
 			entityManager.getTransaction().begin();
-			entityManager.merge(reserva);
+			entityManager.merge(perfil);
 			entityManager.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -66,11 +66,11 @@ public class ReservaDAO {
 		}
 	}
 
-	public void remove(Reserva reserva) {
+	public void remove(Perfil perfil) {
 		try {
 			entityManager.getTransaction().begin();
-			reserva = entityManager.find(Reserva.class, reserva.getId());
-			entityManager.remove(reserva);
+			perfil = entityManager.find(Perfil.class, perfil.getId());
+			entityManager.remove(perfil);
 			entityManager.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -80,8 +80,8 @@ public class ReservaDAO {
 
 	public void removeById(int id) {
 		try {
-			Reserva reserva = getById(id);
-			remove(reserva);
+			Perfil perfil = getById(id);
+			remove(perfil);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}

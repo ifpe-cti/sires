@@ -6,22 +6,22 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import com.github.ssferraz.sires.entity.Reserva;
+import com.github.ssferraz.sires.entity.Solicitacao;
 
-public class ReservaDAO {
+public class SolicitacaoDAO {
 
-	private static ReservaDAO instance;
+	private static SolicitacaoDAO instance;
 	protected EntityManager entityManager;
 	private EntityManagerFactory emf = null;
 
-	public static ReservaDAO getInstance() {
+	public static SolicitacaoDAO getInstance() {
 		if (instance == null) {
-			instance = new ReservaDAO();
+			instance = new SolicitacaoDAO();
 		}
 		return instance;
 	}
 
-	public ReservaDAO() {
+	public SolicitacaoDAO() {
 		entityManager = getEntityManager();
 	}
 
@@ -33,21 +33,22 @@ public class ReservaDAO {
 		return entityManager;
 	}
 
-	public Reserva getById(int id) {
-		return entityManager.find(Reserva.class, id);
+	public Solicitacao getById(int id) {
+		return entityManager.find(Solicitacao.class, id);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Reserva> findAll() {
-		List<Reserva> listaRetorno = this.entityManager.createQuery("from " + Reserva.class.getName()).getResultList();
+	public List<Solicitacao> findAll() {
+		List<Solicitacao> listaRetorno = this.entityManager.createQuery("from " + Solicitacao.class.getName())
+				.getResultList();
 		this.entityManager.close();
 		return listaRetorno;
 	}
 
-	public void persist(Reserva reserva) {
+	public void persist(Solicitacao solicitacao) {
 		try {
 			entityManager.getTransaction().begin();
-			entityManager.persist(reserva);
+			entityManager.persist(solicitacao);
 			entityManager.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -55,10 +56,10 @@ public class ReservaDAO {
 		}
 	}
 
-	public void update(Reserva reserva) {
+	public void update(Solicitacao solicitacao) {
 		try {
 			entityManager.getTransaction().begin();
-			entityManager.merge(reserva);
+			entityManager.merge(solicitacao);
 			entityManager.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -66,11 +67,11 @@ public class ReservaDAO {
 		}
 	}
 
-	public void remove(Reserva reserva) {
+	public void remove(Solicitacao solicitacao) {
 		try {
 			entityManager.getTransaction().begin();
-			reserva = entityManager.find(Reserva.class, reserva.getId());
-			entityManager.remove(reserva);
+			solicitacao = entityManager.find(Solicitacao.class, solicitacao.getId());
+			entityManager.remove(solicitacao);
 			entityManager.getTransaction().commit();
 		} catch (Exception ex) {
 			ex.printStackTrace();
@@ -80,8 +81,8 @@ public class ReservaDAO {
 
 	public void removeById(int id) {
 		try {
-			Reserva reserva = getById(id);
-			remove(reserva);
+			Solicitacao solicitacao = getById(id);
+			remove(solicitacao);
 		} catch (Exception ex) {
 			ex.printStackTrace();
 		}
