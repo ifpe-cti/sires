@@ -1,22 +1,38 @@
 package com.github.ssferraz.sires.bean;
 
-import javax.faces.application.FacesMessage;
+import java.time.LocalTime;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
-import javax.faces.context.FacesContext;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
-
-import com.github.ssferraz.sires.dao.PersistenceDAO;
-import com.github.ssferraz.sires.dao.ReservaDAO;
-import com.github.ssferraz.sires.entity.Reserva;
 
 	@ManagedBean
 	@RequestScoped
 	public class ReservaBean {
+		
+		private LocalTime timeInitial;
+		private LocalTime timeFinal;
+		
+		
+		
+		public LocalTime getTimeInitial() {
+			return timeInitial;
+		}
+		public void setTimeInitial(LocalTime timeInitial) {
+			this.timeInitial = timeInitial;
+		}
+		public LocalTime getTimeFinal() {
+			return timeFinal;
+		}
+		public void setTimeFinal(LocalTime timeFinal) {
+			this.timeFinal = timeFinal;
+		}
 
+		
+		
+
+		
+		
+		/*
 		EntityManager em;
 		EntityManagerFactory emf;
 		ReservaDAO reservaDAO;
@@ -53,7 +69,7 @@ import com.github.ssferraz.sires.entity.Reserva;
 		       }catch(IndexOutOfBoundsException index){
 		           return null;
 		       }
-		}
+		}*/
 		
 	}
 
