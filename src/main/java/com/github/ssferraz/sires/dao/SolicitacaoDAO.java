@@ -3,89 +3,173 @@ package com.github.ssferraz.sires.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
+import com.github.ssferraz.sires.connection.ConnectionFactory;
 import com.github.ssferraz.sires.entity.Solicitacao;
+import com.github.ssferraz.sires.entity.Usuario;
 
 public class SolicitacaoDAO {
 
-	private static SolicitacaoDAO instance;
-	protected EntityManager entityManager;
-	private EntityManagerFactory emf = null;
+	// Salvar no banco
+	public void save(Solicitacao solicitacao) {
+		EntityManager em = new ConnectionFactory().getConnection();
 
-	public static SolicitacaoDAO getInstance() {
-		if (instance == null) {
-			instance = new SolicitacaoDAO();
+		try {
+			em.getTransaction().begin();
+			em.persist(solicitacao);
+			em.getTransaction().commit();
+
+		} catch (Exception e) {
+			System.err.println(e);
+			em.getTransaction().rollback();
+		} finally {
+			em.close();
 		}
-		return instance;
 	}
 
-	public SolicitacaoDAO() {
-		entityManager = getEntityManager();
-	}
+	// Atualizar no banco
+	public void update(Solicitacao solicitacao) {
+		EntityManager em = new ConnectionFactory().getConnection();
 
-	private EntityManager getEntityManager() {
-		emf = Persistence.createEntityManagerFactory("siresPU");
-		if (entityManager == null) {
-			entityManager = emf.createEntityManager();
+		try {
+			em.getTransaction().begin();
+			em.merge(solicitacao);
+			em.getTransaction().commit();
+
+		} catch (Exception e) {
+			System.err.println(e);
+			em.getTransaction().rollback();
+		} finally {
+			em.close();
 		}
-		return entityManager;
 	}
 
-	public Solicitacao getById(int id) {
-		return entityManager.find(Solicitacao.class, id);
+	public void remove(Integer id) {
+		EntityManager em = new ConnectionFactory().getConnection();
+
+		try {
+
+			Solicitacao solicitacao = em.find(Solicitacao.class, id);
+
+			em.getTransaction().begin();
+			em.remove(solicitacao);
+			em.getTransaction().commit();
+
+		} catch (Exception e) {
+			System.err.println(e);
+			em.getTransaction().rollback();
+		} finally {
+			em.close();
+		}
+	}
+
+	// Recuperar por ID
+	public Solicitacao getById(Integer id) {
+
+		EntityManager em = new ConnectionFactory().getConnection();
+
+		Solicitacao solicitacao = null;
+
+		try {
+			solicitacao = em.find(Solicitacao.class, id);
+		} catch (Exception e) {
+			System.err.println(e);
+		} finally {
+			em.close();
+		}
+
+		return solicitacao;
+	}
+
+	// Recuperar Todos os Registros
+	@SuppressWarnings("unchecked")
+	public List<Solicitacao> findAll() {
+
+		EntityManager em = new ConnectionFactory().getConnection();
+
+		List<Solicitacao> lista = null;
+
+		try {
+			lista = em.createQuery("from Solicitacao order by id asc").getResultList();
+		} catch (Exception e) {
+			System.err.println(e);
+		} finally {
+			em.close();
+		}
+
+		return lista;
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<Solicitacao> findAll() {
-		List<Solicitacao> listaRetorno = this.entityManager.createQuery("from " + Solicitacao.class.getName())
-				.getResultList();
-		this.entityManager.close();
-		return listaRetorno;
+	public List<Solicitacao> findAutorizadas() {
+
+		EntityManager em = new ConnectionFactory().getConnection();
+
+		List<Solicitacao> lista = null;
+
+		try {
+			lista = em.createQuery("from Solicitacao where autorizado = true order by id asc").getResultList();
+		} catch (Exception e) {
+			System.err.println(e);
+		} finally {
+			em.close();
+		}
+
+		return lista;
 	}
 
-	public void persist(Solicitacao solicitacao) {
+	@SuppressWarnings("unchecked")
+	public List<Solicitacao> findReprovadas() {
+
+		EntityManager em = new ConnectionFactory().getConnection();
+
+		List<Solicitacao> lista = null;
+
 		try {
-			entityManager.getTransaction().begin();
-			entityManager.persist(solicitacao);
-			entityManager.getTransaction().commit();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
+			lista = em.createQuery("from Solicitacao where autorizado = false order by id asc").getResultList();
+		} catch (Exception e) {
+			System.err.println(e);
+		} finally {
+			em.close();
 		}
+
+		return lista;
 	}
 
-	public void update(Solicitacao solicitacao) {
+	@SuppressWarnings("unchecked")
+	public List<Solicitacao> findPendentes() {
+
+		EntityManager em = new ConnectionFactory().getConnection();
+
+		List<Solicitacao> lista = null;
+
 		try {
-			entityManager.getTransaction().begin();
-			entityManager.merge(solicitacao);
-			entityManager.getTransaction().commit();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
+			lista = em.createQuery("from Solicitacao where status = 'Pendente' order by id asc").getResultList();
+		} catch (Exception e) {
+			System.err.println(e);
+		} finally {
+			em.close();
 		}
+
+		return lista;
 	}
 
-	public void remove(Solicitacao solicitacao) {
-		try {
-			entityManager.getTransaction().begin();
-			solicitacao = entityManager.find(Solicitacao.class, solicitacao.getId());
-			entityManager.remove(solicitacao);
-			entityManager.getTransaction().commit();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
-		}
-	}
+	@SuppressWarnings("unchecked")
+	public List<Solicitacao> findByRequisitante(Usuario usuario) {
 
-	public void removeById(int id) {
+		EntityManager em = new ConnectionFactory().getConnection();
+
+		List<Solicitacao> lista = null;
+
 		try {
-			Solicitacao solicitacao = getById(id);
-			remove(solicitacao);
-		} catch (Exception ex) {
-			ex.printStackTrace();
+			lista = em.createQuery("from Solicitacao where requisitante_id = " + usuario.getId() + " order by id asc").getResultList();
+		} catch (Exception e) {
+			System.err.println(e);
+		} finally {
+			em.close();
 		}
+
+		return lista;
 	}
 
 }

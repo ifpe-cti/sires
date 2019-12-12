@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+<h:head>
+	<title>SIRES - Visitante</title>
+	<h:outputStylesheet library="css" name="bootstrap.css" />
+	<style>
+.background {
+	background-image: url("resources/images/background.png");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% 100%;
+}
+
+h2 {
+	font-size: 22px;
+}
+
+h4 {
+	font-size: 22px;
+}
+
+#top {
+	background-color: #2c422e;
+	color: white;
+	height: 64px;
+}
+
+#top-logo {
+	position: absolute;
+   	margin-left: 15px;
+   	margin-top: 15px;
+  }
+
+#logo-name {
+	text-align: center;
+}
+
+#logo {
+	width: 32px;
+	height: 32px;	
+}
+</style>
+</h:head>
+<h:body styleClass="background">
+
+	<c:if test="${loginBean.usuarioLogado == true}">
+		<script>
+			location.href = '/sires/index.xhtml';
+		</script>
+	</c:if>
+
+	<div id="top">
+		<div id="top-logo">
+			<h:graphicImage id="logo" value="resources/images/logo.png" />
+		</div>
+		<div id="logo-name">
+			<h2>SIRES - Visitante</h2>
+			<h4>Sistema de Reserva de Salas</h4>
+		</div>
+	</div>
+
+	<h:form id="form">
+		<p:growl id="menu" showDetail="true" sticky="false" life="3000" />
+
+
+		<p:panel header="Reservas Registradas">
+
+			<div align="right">
+				<p:commandButton value="Sair"
+					action="/login.xhtml?faces-redirect=true" icon="ui-icon-power"
+					update="menu" />
+			</div>
+
+			<p:separator />
+
+			<p:dataTable id="tab" value="#{reservaBean.mostrarReservasFuturas()}"
+				var="reserva" rowKey="#{reserva.id}"
+				emptyMessage="Não há reservas registradas."
+				style="text-align: center">
+
+				<p:column headerText="ID" width="10%" filterBy="#{reserva.id}">
+					<h:outputText value="#{reserva.id}" />
+				</p:column>
+
+				<p:column headerText="Sala" width="20%"
+					filterBy="#{reserva.solicitacao.sala.nome}">
+					<h:outputText value="#{reserva.solicitacao.sala.nome}" />
+				</p:column>
+
+				<p:column headerText="Nome Requisitante" width="30%"
+					filterBy="#{reserva.solicitacao.requisitante.nome}">
+					<h:outputText value="#{reserva.solicitacao.requisitante.nome}" />
+				</p:column>
+
+				<p:column headerText="Data" width="10%"
+					filterBy="#{reserva.solicitacao.data}">
+					<h:outputText value="#{reserva.solicitacao.data}">
+						<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+							timeZone="GMT-3:00" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Início" width="10%"
+					filterBy="#{reserva.solicitacao.horarioInicio}">
+					<h:outputText value="#{reserva.solicitacao.horarioInicio}">
+						<f:convertDateTime pattern="hh:mm" locale="pt_BR"
+							timeZone="GMT-3:00" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Fim" width="10%"
+					filterBy="#{reserva.solicitacao.horarioInicio}">
+					<h:outputText value="#{reserva.solicitacao.horarioFim}">
+						<f:convertDateTime pattern="hh:mm" locale="pt_BR"
+							timeZone="GMT-3:00" />
+					</h:outputText>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+
+	</h:form>
+</h:body>
+</html>

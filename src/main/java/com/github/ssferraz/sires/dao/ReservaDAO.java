@@ -3,88 +3,99 @@ package com.github.ssferraz.sires.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
+import com.github.ssferraz.sires.connection.ConnectionFactory;
 import com.github.ssferraz.sires.entity.Reserva;
 
 public class ReservaDAO {
 
-	private static ReservaDAO instance;
-	protected EntityManager entityManager;
-	private EntityManagerFactory emf = null;
+	// Salvar no banco
+	public void save(Reserva reserva) {
+		EntityManager em = new ConnectionFactory().getConnection();
 
-	public static ReservaDAO getInstance() {
-		if (instance == null) {
-			instance = new ReservaDAO();
+		try {
+			em.getTransaction().begin();
+			em.persist(reserva);
+			em.getTransaction().commit();
+
+		} catch (Exception e) {
+			System.err.println(e);
+			em.getTransaction().rollback();
+		} finally {
+			em.close();
 		}
-		return instance;
 	}
 
-	public ReservaDAO() {
-		entityManager = getEntityManager();
-	}
+	// Atualizar no banco
+	public void update(Reserva reserva) {
+		EntityManager em = new ConnectionFactory().getConnection();
 
-	private EntityManager getEntityManager() {
-		emf = Persistence.createEntityManagerFactory("siresPU");
-		if (entityManager == null) {
-			entityManager = emf.createEntityManager();
+		try {
+			em.getTransaction().begin();
+			em.merge(reserva);
+			em.getTransaction().commit();
+
+		} catch (Exception e) {
+			System.err.println(e);
+			em.getTransaction().rollback();
+		} finally {
+			em.close();
 		}
-		return entityManager;
+	}
+	//Remover
+	public void remove(Integer id) {
+		EntityManager em = new ConnectionFactory().getConnection();
+
+		try {
+
+			Reserva reserva = em.find(Reserva.class, id);
+
+			em.getTransaction().begin();
+			em.remove(reserva);
+			em.getTransaction().commit();
+
+		} catch (Exception e) {
+			System.err.println(e);
+			em.getTransaction().rollback();
+		} finally {
+			em.close();
+		}
 	}
 
-	public Reserva getById(int id) {
-		return entityManager.find(Reserva.class, id);
+	// Recuperar por ID
+	public Reserva getById(Integer id) {
+
+		EntityManager em = new ConnectionFactory().getConnection();
+
+		Reserva reserva = null;
+
+		try {
+			reserva = em.find(Reserva.class, id);
+		} catch (Exception e) {
+			System.err.println(e);
+		} finally {
+			em.close();
+		}
+
+		return reserva;
 	}
 
+	// Recuperar Todos os Registros
 	@SuppressWarnings("unchecked")
 	public List<Reserva> findAll() {
-		List<Reserva> listaRetorno = this.entityManager.createQuery("from " + Reserva.class.getName()).getResultList();
-		this.entityManager.close();
-		return listaRetorno;
-	}
 
-	public void persist(Reserva reserva) {
+		EntityManager em = new ConnectionFactory().getConnection();
+
+		List<Reserva> lista = null;
+
 		try {
-			entityManager.getTransaction().begin();
-			entityManager.persist(reserva);
-			entityManager.getTransaction().commit();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
+			lista = em.createQuery("from Reserva order by id asc").getResultList();
+		} catch (Exception e) {
+			System.err.println(e);
+		} finally {
+			em.close();
 		}
-	}
 
-	public void update(Reserva reserva) {
-		try {
-			entityManager.getTransaction().begin();
-			entityManager.merge(reserva);
-			entityManager.getTransaction().commit();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
-		}
+		return lista;
 	}
-
-	public void remove(Reserva reserva) {
-		try {
-			entityManager.getTransaction().begin();
-			reserva = entityManager.find(Reserva.class, reserva.getId());
-			entityManager.remove(reserva);
-			entityManager.getTransaction().commit();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
-		}
-	}
-
-	public void removeById(int id) {
-		try {
-			Reserva reserva = getById(id);
-			remove(reserva);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-
 }

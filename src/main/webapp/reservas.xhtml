@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>SIRES - Reservas</title>
+	<ui:include src="/menu.xhtml" />
+	<style>
+.background {
+	background-image: url("resources/images/background.png");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% 100%;
+	margin: 0px 0px 0px 0px;
+}
+</style>
+</h:head>
+<h:body styleClass="background">
+
+	<h:form id="form">
+		<p:growl id="menu" showDetail="true" sticky="false" life="3000" />
+
+		<p:panel header="Reservas Registradas">
+
+			<p:separator />
+
+			<p:dataTable id="tab" value="#{reservaBean.mostrarReservasFuturas()}"
+				var="reserva" rowKey="#{reserva.id}"
+				emptyMessage="Não há reservas registradas."
+				style="text-align: center">
+
+				<p:column headerText="ID" width="10%" filterBy="#{reserva.id}">
+					<h:outputText value="#{reserva.id}" />
+				</p:column>
+
+				<p:column headerText="Sala" width="20%"
+					filterBy="#{reserva.solicitacao.sala.nome}">
+					<h:outputText value="#{reserva.solicitacao.sala.nome}" />
+				</p:column>
+
+				<p:column headerText="Nome Requisitante" width="30%"
+					filterBy="#{reserva.solicitacao.requisitante.nome}">
+					<h:outputText value="#{reserva.solicitacao.requisitante.nome}" />
+				</p:column>
+
+				<p:column headerText="Data" width="10%"
+					filterBy="#{reserva.solicitacao.data}">
+					<h:outputText value="#{reserva.solicitacao.data}">
+						<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+							timeZone="GMT-3:00" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Início" width="10%"
+					filterBy="#{reserva.solicitacao.horarioInicio}">
+					<h:outputText value="#{reserva.solicitacao.horarioInicio}">
+						<f:convertDateTime pattern="hh:mm" locale="pt_BR"
+							timeZone="GMT-3:00" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Fim" width="10%"
+					filterBy="#{reserva.solicitacao.horarioFim}">
+					<h:outputText value="#{reserva.solicitacao.horarioFim}">
+						<f:convertDateTime pattern="hh:mm" locale="pt_BR"
+							timeZone="GMT-3:00" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Remover" width="10%">
+					<p:commandButton title="Excluir" icon="ui-icon-trash"
+						oncomplete="PF('confirmation').show();" update=":form:confirm">
+						<f:setPropertyActionListener value="#{reserva}"
+							target="#{reservaBean.reserva}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+		<p:dialog id="confirm" appendToBody="true" draggable="false"
+			closable="false" resizable="false" modal="true"
+			widgetVar="confirmation">
+			<h:outputText value="Tem certeza de que quer exluir a reserva?" />
+			<br />
+			<center>
+				<p:commandButton value="Sim"
+					action="#{reservaBean.removerReserva(reservaBean.reserva)}"
+					ajax="false" update=":form" oncomplete="PF('confirmation').hide();" />
+				<p:commandButton value="Não" oncomplete="PF('confirmation').hide();" />
+			</center>
+		</p:dialog>
+	</h:form>
+</h:body>
+</html>

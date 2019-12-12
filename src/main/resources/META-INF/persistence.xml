@@ -5,6 +5,10 @@
 	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
 	<persistence-unit name="siresPU" transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+			<class>com.github.ssferraz.sires.entity.Reserva</class>
+			<class>com.github.ssferraz.sires.entity.Sala</class>
+			<class>com.github.ssferraz.sires.entity.Solicitacao</class>
+			<class>com.github.ssferraz.sires.entity.Usuario</class>
 		<exclude-unlisted-classes>false</exclude-unlisted-classes>
 		<properties>
 			<property name="javax.persistence.jdbc.url"	value="jdbc:mysql://localhost:3306/sires?serverTimezone=UTC" />
@@ -12,7 +16,7 @@
 			<property name="javax.persistence.jdbc.driver" value="com.mysql.cj.jdbc.Driver" />
 			<property name="javax.persistence.jdbc.password" value="" />
 			<property name="hibernate.cache.provider_class" value="org.hibernate.cache.NoCacheProvider" />
-			<property name="hibernate.hbm2ddl.auto" value="create" />
+			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.MySQL5InnoDBDialect " />
 			<property name="hibernate.show_sql" value="true" />
 		</properties>

@@ -1,53 +1,79 @@
 package com.github.ssferraz.sires.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
+import javax.faces.bean.ManagedBean;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.github.ssferraz.sires.utils.Md5;
+import com.github.ssferraz.sires.utils.SampleEntity;
+
 @Entity
+@ManagedBean(name = "usuario")
 @Table(name = "usuario")
-public class Usuario implements Serializable {
+public class Usuario implements Serializable, SampleEntity {
 
 	private static final long serialVersionUID = 7969049553075273232L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	@Column
+	private Integer id;
+	
+	@Column(nullable = false, unique = true)
 	private String siape;
-	@Column
+	
+	@Column(nullable = false)
 	private String senha;
-	@Column
+	
+	@Column(nullable = false)
 	private String nome;
-	@Column
+	
+	@Column(nullable = false)
 	private String email;
-	@OneToOne(optional = false)
-	private Perfil perfil;
+	
+	@Column(nullable = false)
+	private boolean statusAdmin;
 
+	//@OneToMany(mappedBy="solicitacao", cascade=CascadeType.REMOVE)
+	//private List<Solicitacao> solicitacoes;
+	
 	public Usuario() {
 
 	}
-
-	public Usuario(int id, String siape, String senha, String nome, String email, Perfil perfil) {
+	
+	public Usuario(Integer id, String siape, String senha, String nome, String email, boolean statusAdmin) {
 		super();
 		this.id = id;
 		this.siape = siape;
-		this.senha = senha;
+		this.senha = Md5.criptografar(senha);
 		this.nome = nome;
 		this.email = email;
-		this.perfil = perfil;
+		this.statusAdmin = statusAdmin;
 	}
+	
+	public Usuario(String siape, String senha, String nome, String email, boolean statusAdmin) {
+		super();
+		this.siape = siape;
+		this.senha = Md5.criptografar(senha);
+		this.nome = nome;
+		this.email = email;
+		this.statusAdmin = statusAdmin;
+	}
+	
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -64,7 +90,7 @@ public class Usuario implements Serializable {
 	}
 
 	public void setSenha(String senha) {
-		this.senha = senha;
+		this.senha = Md5.criptografar(senha);
 	}
 
 	public String getNome() {
@@ -83,19 +109,18 @@ public class Usuario implements Serializable {
 		this.email = email;
 	}
 	
-	public Perfil getPerfil() {
-		return perfil;
+	public boolean getStatusAdmin() {
+		return statusAdmin;
 	}
-
-	public void setPerfil(Perfil perfil) {
-		this.perfil = perfil;
+	
+	public void setStatusAdmin(boolean statusAdmin) {
+		this.statusAdmin = statusAdmin;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((perfil == null) ? 0 : perfil.hashCode());
 		result = prime * result + ((email == null) ? 0 : email.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
@@ -113,11 +138,6 @@ public class Usuario implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		if (perfil == null) {
-			if (other.perfil != null)
-				return false;
-		} else if (!perfil.equals(other.perfil))
-			return false;
 		if (email == null) {
 			if (other.email != null)
 				return false;
@@ -146,6 +166,6 @@ public class Usuario implements Serializable {
 	@Override
 	public String toString() {
 		return "Usuario [id=" + id + ", siape=" + siape + ", senha=" + senha + ", nome=" + nome + ", email=" + email
-				+ ", perfil=" + perfil + "]";
+				+ ", statusAdmin=" + statusAdmin + "]";
 	}
 }

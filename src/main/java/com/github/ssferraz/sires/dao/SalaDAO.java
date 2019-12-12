@@ -3,88 +3,99 @@ package com.github.ssferraz.sires.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
+import com.github.ssferraz.sires.connection.ConnectionFactory;
 import com.github.ssferraz.sires.entity.Sala;
 
 public class SalaDAO {
 
-	private static SalaDAO instance;
-	protected EntityManager entityManager;
-	private EntityManagerFactory emf = null;
+	// Salvar no banco
+	public void save(Sala sala) {
+		EntityManager em = new ConnectionFactory().getConnection();
 
-	public static SalaDAO getInstance() {
-		if (instance == null) {
-			instance = new SalaDAO();
+		try {
+			em.getTransaction().begin();
+			em.persist(sala);
+			em.getTransaction().commit();
+
+		} catch (Exception e) {
+			System.err.println(e);
+			em.getTransaction().rollback();
+		} finally {
+			em.close();
 		}
-		return instance;
 	}
 
-	public SalaDAO() {
-		entityManager = getEntityManager();
-	}
+	// Atualizar no banco
+	public void update(Sala sala) {
+		EntityManager em = new ConnectionFactory().getConnection();
 
-	private EntityManager getEntityManager() {
-		emf = Persistence.createEntityManagerFactory("siresPU");
-		if (entityManager == null) {
-			entityManager = emf.createEntityManager();
+		try {
+			em.getTransaction().begin();
+			em.merge(sala);
+			em.getTransaction().commit();
+
+		} catch (Exception e) {
+			System.err.println(e);
+			em.getTransaction().rollback();
+		} finally {
+			em.close();
 		}
-		return entityManager;
+	}
+	//Remover
+	public void remove(Integer id) {
+		EntityManager em = new ConnectionFactory().getConnection();
+
+		try {
+
+			Sala sala = em.find(Sala.class, id);
+
+			em.getTransaction().begin();
+			em.remove(sala);
+			em.getTransaction().commit();
+
+		} catch (Exception e) {
+			System.err.println(e);
+			em.getTransaction().rollback();
+		} finally {
+			em.close();
+		}
 	}
 
-	public Sala getById(int id) {
-		return entityManager.find(Sala.class, id);
+	// Recuperar por ID
+	public Sala getById(Integer id) {
+
+		EntityManager em = new ConnectionFactory().getConnection();
+
+		Sala sala = null;
+
+		try {
+			sala = em.find(Sala.class, id);
+		} catch (Exception e) {
+			System.err.println(e);
+		} finally {
+			em.close();
+		}
+
+		return sala;
 	}
 
+	// Recuperar Todos os Registros
 	@SuppressWarnings("unchecked")
 	public List<Sala> findAll() {
-		List<Sala> listaRetorno = this.entityManager.createQuery("from " + Sala.class.getName()).getResultList();
-		this.entityManager.close();
-		return listaRetorno;
-	}
 
-	public void persist(Sala sala) {
+		EntityManager em = new ConnectionFactory().getConnection();
+
+		List<Sala> lista = null;
+
 		try {
-			entityManager.getTransaction().begin();
-			entityManager.persist(sala);
-			entityManager.getTransaction().commit();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
+			lista = em.createQuery("from Sala order by id asc").getResultList();
+		} catch (Exception e) {
+			System.err.println(e);
+		} finally {
+			em.close();
 		}
-	}
 
-	public void update(Sala sala) {
-		try {
-			entityManager.getTransaction().begin();
-			entityManager.merge(sala);
-			entityManager.getTransaction().commit();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
-		}
+		return lista;
 	}
-
-	public void remove(Sala sala) {
-		try {
-			entityManager.getTransaction().begin();
-			sala = entityManager.find(Sala.class, sala.getId());
-			entityManager.remove(sala);
-			entityManager.getTransaction().commit();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
-		}
-	}
-
-	public void removeById(int id) {
-		try {
-			Sala sala = getById(id);
-			remove(sala);
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-
 }

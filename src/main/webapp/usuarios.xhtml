@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>SIRES - Usuários</title>
+	<ui:include src="/menu.xhtml" />
+	<style>
+	.background {
+	background-image: url("resources/images/background.png");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% 100%;
+	margin: 0px 0px 0px 0px;
+	</style>
+</h:head>
+<h:body styleClass="background">
+
+	<c:if test="${loginBean.usuario.statusAdmin == false}">
+		<script>
+			location.href = '/sires/index.xhtml';
+		</script>
+	</c:if>
+
+	<h:form id="form">
+
+		<p:growl id="menu" showDetail="true" sticky="false" life="3000" />
+
+		<p:panel header="Usuarios Registrados">
+
+			<p:commandButton title="adicionar" value="Novo Usuário"
+				update=":form" icon="ui-icon-document"
+				oncomplete="location.href='cadastrarUsuario.xhtml'">
+			</p:commandButton>
+
+			<p:separator />
+
+			<p:dataTable id="tab" value="#{usuarioBean.mostrarUsuarios()}"
+				var="usuario" rowKey="#{usuario.id}"
+				emptyMessage="Não há usuários cadastrados."
+				style="text-align: center">
+
+				<p:column headerText="ID" width="10%" filterBy="#{usuario.id}">
+					<h:outputText value="#{usuario.id}" />
+				</p:column>
+
+				<p:column headerText="SIAPE" width="15%" filterBy="#{usuario.siape}">
+					<h:outputText value="#{usuario.siape}" />
+				</p:column>
+
+				<p:column headerText="Nome" width="30%" filterBy="#{usuario.nome}">
+					<h:outputText value="#{usuario.nome}" />
+				</p:column>
+
+				<p:column headerText="E-mail" width="30%" filterBy="#{usuario.email}">
+					<h:outputText value="#{usuario.email}" />
+				</p:column>
+
+				<p:column headerText="É administrador?" width="20%">
+					<h:outputText value="#{(usuarioBean.eAdmin(usuario))}" />
+				</p:column>
+
+				<p:column headerText="Atualizar/Exluir" width="20%">
+					<p:commandButton title="Editar" icon="ui-icon-pencil"
+						oncomplete="PF('atualizarU').show();" update=":form:atualizar">
+						<f:setPropertyActionListener value="#{usuario}"
+							target="#{usuarioBean.usuario}" />
+					</p:commandButton>
+
+					<p:commandButton title="Excluir" icon="ui-icon-trash"
+						oncomplete="PF('confirmation').show();" update=":form:confirm">
+						<f:setPropertyActionListener value="#{usuario}"
+							target="#{usuarioBean.usuario}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+
+
+		<p:dialog id="atualizar" appendToBody="true" draggable="false"
+			closable="true" resizable="false" modal="true" widgetVar="atualizarU">
+
+			<center>
+
+				<p:panelGrid id="display" columns="2">
+
+					<h:outputText value="ID: " />
+					<h:outputText value="#{usuarioBean.usuario.id}" size="40" />
+
+					<h:outputText value="SIAPE: " />
+					<h:outputText value="#{usuarioBean.usuario.siape}" size="40" />
+
+					<h:outputText value="Nome*: " />
+					<p:inputText value="#{usuarioBean.usuario.nome}" size="40"
+						placeholder="#{usuarioBean.usuario.nome}" />
+
+					<h:outputText value="Senha*:" />
+					<p:password value="#{usuarioBean.usuario.senha}" size="40" />
+
+					<h:outputText value="Email*: " />
+					<p:inputText value="#{usuarioBean.usuario.email}" size="40"
+						placeholder="#{usuarioBean.usuario.email}" />
+
+					<h:outputText value="Status*: " />
+					<p:selectOneMenu value="#{usuarioBean.usuario.statusAdmin}">
+						<f:selectItem itemLabel="Selecione" itemValue="#{null}" />
+						<f:selectItem itemLabel="Administrador" itemValue="#{true}" />
+						<f:selectItem itemLabel="Servidor" itemValue="#{false}" />
+					</p:selectOneMenu>
+
+				</p:panelGrid>
+
+				<p:separator />
+
+				<p:commandButton value="Atualizar"
+					action="#{usuarioBean.atualizarUsuario(usuarioBean.usuario)}"
+					ajax="false" update=":form" />
+			</center>
+		</p:dialog>
+
+
+		<p:dialog id="confirm" appendToBody="true" draggable="false"
+			closable="false" resizable="false" modal="true"
+			widgetVar="confirmation">
+			<h:outputText value="Tem certeza de que quer exluir o usuário?" />
+			<br />
+			<center>
+				<p:commandButton value="Sim"
+					action="#{usuarioBean.removerUsuario(usuarioBean.usuario)}"
+					ajax="false" update=":form" oncomplete="PF('confirmation').hide();" />
+				<p:commandButton value="Não" oncomplete="PF('confirmation').hide();" />
+			</center>
+		</p:dialog>
+
+	</h:form>
+</h:body>
+</html>

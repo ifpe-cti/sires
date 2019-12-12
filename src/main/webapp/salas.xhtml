@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>SIRES - Salas</title>
+	<ui:include src="/menu.xhtml" />
+	<style>
+	.background {
+	background-image: url("resources/images/background.png");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% 100%;
+	margin: 0px 0px 0px 0px;
+	</style>
+</h:head>
+<h:body styleClass="background">
+
+	<c:if test="${loginBean.usuario.statusAdmin == false}">
+		<script>
+			location.href = '/sires/index.xhtml';
+		</script>
+	</c:if>
+
+	<h:form id="form">
+		<p:growl id="menu" showDetail="true" sticky="false" life="3000" />
+
+		<p:panel header="Salas Cadastradas">
+
+			<p:commandButton title="adicionar" value="Nova Sala" update=":form"
+				icon="ui-icon-document"
+				oncomplete="location.href='cadastrarSala.xhtml'">
+			</p:commandButton>
+
+			<p:separator />
+
+			<p:dataTable id="tab" value="#{salaBean.mostrarSalas()}" var="sala"
+				rowKey="#{sala.id}" emptyMessage="Não há salas cadastradas."
+				style="text-align: center">
+
+				<p:column headerText="ID" width="10%" filterBy="#{sala.id}">
+					<h:outputText value="#{sala.id}" />
+				</p:column>
+
+				<p:column headerText="Bloco" width="20%" filterBy="#{sala.bloco}">
+					<h:outputText value="#{sala.bloco}" />
+				</p:column>
+
+				<p:column headerText="Nome" width="30%" filterBy="#{sala.nome}">
+					<h:outputText value="#{sala.nome}" />
+				</p:column>
+
+				<p:column headerText="Tipo" width="30%" filterBy="#{sala.tipo}">
+					<h:outputText value="#{sala.tipo}" />
+				</p:column>
+
+				<p:column headerText="Atualizar/Exluir" width="20%">
+					<p:commandButton title="editar" icon="ui-icon-pencil"
+						oncomplete="PF('atualizarU').show();" update=":form:atualizar">
+						<f:setPropertyActionListener value="#{sala}"
+							target="#{salaBean.sala}" />
+					</p:commandButton>
+
+					<p:commandButton title="excluir" icon="ui-icon-trash"
+						oncomplete="PF('confirmation').show();" update=":form:confirm">
+						<f:setPropertyActionListener value="#{sala}"
+							target="#{salaBean.sala}" />
+					</p:commandButton>
+				</p:column>
+			</p:dataTable>
+		</p:panel>
+
+
+		<p:dialog id="atualizar" appendToBody="true" draggable="false"
+			closable="true" resizable="false" modal="true" widgetVar="atualizarU">
+
+			<center>
+
+				<p:panelGrid id="display" columns="2">
+
+					<h:outputText value="ID: " />
+					<h:outputText value="#{salaBean.sala.id}" size="40" />
+
+					<h:outputText value="Nome: " />
+					<p:inputText value="#{salaBean.sala.nome}" size="40"
+						placeholder="#{salaBean.sala.nome}" />
+
+					<h:outputText value="Bloco:" />
+					<p:selectOneMenu value="#{salaBean.sala.bloco}">
+						<f:selectItem itemLabel="B" itemValue="B" />
+						<f:selectItem itemLabel="C" itemValue="C" />
+						<f:selectItem itemLabel="D" itemValue="D" />
+						<f:selectItem itemLabel="E" itemValue="E" />
+					</p:selectOneMenu>
+
+					<h:outputText value="Tipo:" />
+					<p:selectOneMenu value="#{salaBean.sala.tipo}">
+						<f:selectItem itemLabel="Selecione" itemValue="" />
+						<f:selectItem itemLabel="Auditório" itemValue="Auditório" />
+						<f:selectItem itemLabel="Laboratório de Informática"
+							itemValue="Laboratório de Informática" />
+						<f:selectItem itemLabel="Sala de Aula" itemValue="Sala de Aula" />
+					</p:selectOneMenu>
+
+				</p:panelGrid>
+
+				<p:separator />
+
+				<p:commandButton value="Atualizar"
+					action="#{salaBean.atualizarSala(salaBean.sala)}" ajax="false"
+					update=":form" />
+
+			</center>
+
+		</p:dialog>
+
+
+		<p:dialog id="confirm" appendToBody="true" closable="false"
+			resizable="false" modal="true" widgetVar="confirmation">
+			<h:outputText value="Tem certeza de que quer excluir a sala?" />
+			<br />
+			<center>
+				<p:commandButton value="Sim"
+					action="#{salaBean.removerSala(salaBean.sala)}" ajax="false"
+					update=":form" oncomplete="PF('confirmation').hide();" />
+				<p:commandButton value="Não" oncomplete="PF('confirmation').hide();" />
+			</center>
+		</p:dialog>
+
+	</h:form>
+</h:body>
+</html>

@@ -2,6 +2,7 @@ package com.github.ssferraz.sires.entity;
 
 import java.io.Serializable;
 
+import javax.faces.bean.ManagedBean;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,26 +10,33 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import com.github.ssferraz.sires.utils.SampleEntity;
+
 @Entity
+@ManagedBean(name = "sala")
 @Table(name = "sala")
-public class Sala implements Serializable {
+public class Sala implements Serializable, SampleEntity {
 
 	private static final long serialVersionUID = -5487064625857522349L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	@Column
+	private Integer id;
+	
+	@Column(nullable = false)
 	private char bloco;
-	@Column
+	
+	@Column(nullable = false)
 	private String nome;
-	@Column
+	
+	@Column(nullable = false)
 	private String tipo;
 
 	public Sala() {
 
 	}
 
-	public Sala(int id, char bloco, String nome, String tipo) {
+	public Sala(Integer id, char bloco, String nome, String tipo) {
 		super();
 		this.id = id;
 		this.bloco = bloco;
@@ -36,12 +44,20 @@ public class Sala implements Serializable {
 		this.tipo = tipo;
 
 	}
+	
+	public Sala(char bloco, String nome, String tipo) {
+		super();
+		this.bloco = bloco;
+		this.nome = nome;
+		this.tipo = tipo;
 
-	public int getId() {
+	}
+
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

@@ -1,58 +1,77 @@
 package com.github.ssferraz.sires.bean;
 
+import java.io.Serializable;
+import java.util.List;
+
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.RequestScoped;
+import javax.faces.bean.SessionScoped;
+import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
-import javax.persistence.Query;
 
-import com.github.ssferraz.sires.dao.PersistenceDAO;
 import com.github.ssferraz.sires.dao.SalaDAO;
 import com.github.ssferraz.sires.entity.Sala;
 
-@ManagedBean
-@RequestScoped
-public class SalaBean {
+@ManagedBean(name = "salaBean")
+@ViewScoped
+@SessionScoped
+public class SalaBean implements Serializable {
 
-	EntityManager em;
-	EntityManagerFactory emf;
-	SalaDAO salaDAO;
-	
-	public SalaBean() {
-		emf = Persistence.createEntityManagerFactory("sires");
-		em = emf.createEntityManager();
+
+	private static final long serialVersionUID = -1311043629143741585L;
+
+	private SalaDAO dao = new SalaDAO();
+	private Sala sala = new Sala();
+
+	public Sala getSala() {
+		return sala;
 	}
-	
-	public void insert(Sala sala) {
-		em.getTransaction().begin();
-		em.merge(sala);
-		em.getTransaction().commit();
-		emf.close();
+
+	public void setSala(Sala sala) {
+		this.sala = sala;
 	}
-	
-	public void delete(Sala sala) {
-		em.getTransaction().begin();
-		Query q = em.createNativeQuery("delete sala from sires where nome ="+sala.getNome());
-		q.executeUpdate();
-		em.getTransaction().commit();
-		emf.close();
+
+	public String cadastrarSala(Sala sala) {
+
+		if (sala.getNome().equals("") || sala.getTipo().contentEquals("")) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Preencha todos os campos!"));
+			return "";
+			
+		} else {
+			dao.save(sala);
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Sala cadastrada!"));
+			return "salas.xhtml";
+		}
+
 	}
-	public void update(Sala sala) {
-			this.salaDAO.update(sala);
-	        FacesContext.getCurrentInstance().addMessage(null, 
-	                new FacesMessage(FacesMessage.SEVERITY_INFO,"Sucesso!","A sala foi atualizada com sucesso!"));
-	    
+
+	public String atualizarSala(Sala sala) {
+		if (sala.getNome().equals("") || sala.getTipo().contentEquals("")) {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Preencha todos os campos!"));
+			return "";
+			
+		} else {
+			dao.update(sala);
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Sala atualizada!"));
+			return "salas.xhtml";
+		}
 	}
-	
-	public Sala select(Sala sala) {
-		   try{
-	           return (Sala)PersistenceDAO.getInstance().read("select * from Sala where codigo="+sala.getId()).get(0);
-	       }catch(IndexOutOfBoundsException index){
-	           return null;
-	       }
+
+	public String removerSala(Sala sala) {
+		System.out.println(sala.getId());
+		dao.remove(sala.getId());
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Sala removida!"));
+		return "salas.xhtml";
 	}
-	
+
+	public List<Sala> mostrarSalas() {
+		List<Sala> salas = dao.findAll();
+		return salas;
+	}
+
 }

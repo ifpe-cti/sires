@@ -1,56 +1,86 @@
 package com.github.ssferraz.sires.entity;
 
 import java.io.Serializable;
+import java.util.Date;
 
+import javax.faces.bean.ManagedBean;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.SecondaryTable;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
+@ManagedBean(name = "solicitacao")
 @Table(name = "solicitacao")
-@SecondaryTable(name = "periodo")
+
 public class Solicitacao implements Serializable {
+
 	private static final long serialVersionUID = 8318132024879333596L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Column
+
+	@ManyToOne(optional = false)
 	private Sala sala;
-	@Column
+
+	@Temporal(TemporalType.DATE)
+	@Column(nullable = false)
+	private Date data;
+
+	@Temporal(TemporalType.TIME)
+	@Column(nullable = false)
+	private Date horarioInicio;
+
+	@Temporal(TemporalType.TIME)
+	@Column(nullable = false)
+	private Date horarioFim;
+
+	@ManyToOne(optional = false)
 	private Usuario requisitante;
-	@OneToOne(optional = false)
-	private Periodo periodo;
-	@Column
+
+	@Column(nullable = false)
 	private String evento;
-	@Column
-	private boolean autorizado;
+
+	@Column(nullable = false)
+	private String status;
 
 	public Solicitacao() {
 
 	}
 
-	public Solicitacao(int id, Sala sala, Usuario requisitante, Periodo periodo, String evento, boolean autorizado) {
+	public Solicitacao(int id, Sala sala,Date data, Date horarioInicio, Date horarioFim, Usuario requisitante, String evento, String status) {
 		super();
 		this.id = id;
 		this.sala = sala;
+		this.data = data;
+		this.horarioInicio = horarioInicio;
+		this.horarioFim = horarioFim;
 		this.requisitante = requisitante;
-		this.periodo = periodo;
 		this.evento = evento;
-		this.autorizado = autorizado;
-
+		this.status = status;
 	}
+	
+	public Solicitacao(Sala sala,Date data, Date horarioInicio, Date horarioFim, Usuario requisitante, String evento, String status) {
+		super();
+		
+		this.sala = sala;
+		this.data = data;
+		this.horarioInicio = horarioInicio;
+		this.horarioFim = horarioFim;
+		this.requisitante = requisitante;
+		this.evento = evento;
+		this.status = status;
+	}
+	
 
 	public int getId() {
 		return id;
-	}
-
-	public void setId(int id) {
-		this.id = id;
 	}
 
 	public Sala getSala() {
@@ -59,6 +89,30 @@ public class Solicitacao implements Serializable {
 
 	public void setSala(Sala sala) {
 		this.sala = sala;
+	}
+	
+	public Date getData() {
+		return data;
+	}
+	
+	public void setData(Date data) {
+		this.data = data;
+	}
+	
+	public Date getHorarioInicio() {
+		return horarioInicio;
+	}
+	
+	public void setHorarioInicio(Date horarioInicio) {
+		this.horarioInicio = horarioInicio;
+	}
+	
+	public Date getHorarioFim() {
+		return horarioFim;
+	}
+	
+	public void setHorarioFim(Date horarioFim) {
+		this.horarioFim = horarioFim;
 	}
 
 	public Usuario getRequisitante() {
@@ -69,14 +123,6 @@ public class Solicitacao implements Serializable {
 		this.requisitante = requisitante;
 	}
 
-	public Periodo getPeriodo() {
-		return periodo;
-	}
-
-	public void setPeriodo(Periodo periodo) {
-		this.periodo = periodo;
-	}
-
 	public String getEvento() {
 		return evento;
 	}
@@ -84,25 +130,28 @@ public class Solicitacao implements Serializable {
 	public void setEvento(String evento) {
 		this.evento = evento;
 	}
-
-	public boolean isAutorizado() {
-		return autorizado;
+	
+	public String getStatus() {
+		return status;
+	}
+	
+	public void setStatus(String status) {
+		this.status = status;
 	}
 
-	public void setAutorizado(boolean autorizado) {
-		this.autorizado = autorizado;
-	}
-
+	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + (autorizado ? 1231 : 1237);
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		result = prime * result + ((evento == null) ? 0 : evento.hashCode());
 		result = prime * result + id;
-		result = prime * result + ((periodo == null) ? 0 : periodo.hashCode());
 		result = prime * result + ((requisitante == null) ? 0 : requisitante.hashCode());
 		result = prime * result + ((sala == null) ? 0 : sala.hashCode());
+		result = prime * result + ((data == null) ? 0 : data.hashCode());
+		result = prime * result + ((horarioInicio == null) ? 0 : horarioInicio.hashCode());
+		result = prime * result + ((horarioFim == null) ? 0 : horarioFim.hashCode());
 		return result;
 	}
 
@@ -115,7 +164,10 @@ public class Solicitacao implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Solicitacao other = (Solicitacao) obj;
-		if (autorizado != other.autorizado)
+		if (status == null) {
+			if (other.status != null)
+				return false;
+		} else if (!status.equals(other.status))
 			return false;
 		if (evento == null) {
 			if (other.evento != null)
@@ -123,11 +175,6 @@ public class Solicitacao implements Serializable {
 		} else if (!evento.equals(other.evento))
 			return false;
 		if (id != other.id)
-			return false;
-		if (periodo == null) {
-			if (other.periodo != null)
-				return false;
-		} else if (!periodo.equals(other.periodo))
 			return false;
 		if (requisitante == null) {
 			if (other.requisitante != null)
@@ -139,13 +186,29 @@ public class Solicitacao implements Serializable {
 				return false;
 		} else if (!sala.equals(other.sala))
 			return false;
+		if (data == null) {
+			if (other.data != null)
+				return false;
+		} else if (!data.equals(other.data))
+			return false;
+		if (horarioInicio == null) {
+			if (other.horarioInicio != null)
+				return false;
+		} else if (!horarioInicio.equals(other.horarioInicio))
+			return false;
+		if (horarioFim == null) {
+			if (other.horarioFim != null)
+				return false;
+		} else if (!horarioFim.equals(other.horarioFim))
+			return false;
+		
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "Solicitacao [id=" + id + ", sala=" + sala + ", requisitante=" + requisitante + ", periodo=" + periodo
-				+ ", evento=" + evento + ", autorizado=" + autorizado + "]";
+		return "Solicitacao [id=" + id + ", sala = " + sala + ", data=" + data + ", horarioInicio=" + horarioInicio + ", horarioFim=" + horarioFim + ", requisitante=" + requisitante + ", evento=" + evento
+				+ ", status=" + status + "]";
 	}
 
 }

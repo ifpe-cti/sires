@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>SIRES - Registrar Solicitação</title>
+	<ui:include src="/menu.xhtml" />
+	<style>
+	.background {
+	background-image: url("resources/images/background.png");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% 100%;
+	margin: 0px 0px 0px 0px;
+	</style>
+</h:head>
+<h:body styleClass="background">
+
+	<h:form id="form">
+
+		<p:growl id="menu" showDetail="true" sticky="false" life="3000" />
+
+		<p:panel header="Registrar Solicitação">
+
+			<p:panelGrid columns="2" styleClass="grid">
+
+
+				<h:outputText value="Sala: " />
+				<p:selectOneMenu value="#{solicitacao.sala}" converter="generic"
+					filter="true" filterMatchMode="startsWith">
+					<f:selectItem itemLabel="Selecione" itemValue="#{null}" />
+					<f:selectItems value="#{salaBean.mostrarSalas()}" var="sala"
+						itemLabel="#{sala.nome}" itemValue="#{sala}" />
+				</p:selectOneMenu>
+
+				<h:outputText value="Requisitante: " />
+				<p:selectOneMenu value="#{solicitacao.requisitante}"
+					converter="generic" filter="true" filterMatchMode="startsWith">
+					<f:selectItem itemLabel="#{loginBean.usuario.nome}"
+						itemValue="#{loginBean.usuario}" />
+					<f:selectItems
+						value="#{solicitacaoBean.mostrarUsuariosAdmin(loginBean.usuario)}"
+						var="usuario" itemLabel="#{usuario.nome}" itemValue="#{usuario}" />
+				</p:selectOneMenu>
+
+				<h:outputText value="Data: " />
+				<p:calendar id="brazilian" value="#{solicitacao.data}"
+					locale="pt_BR" pattern="dd/MM/yyyy" timeZone="GMT-3:00">
+				</p:calendar>
+
+				<h:outputText value="Início:" />
+				<p:calendar value="#{solicitacao.horarioInicio}" pattern="HH:mm"
+					timeOnly="true" locale="pt_BR" timeZone="GMT-3:00" minHour="07"
+					maxHour="21" maxMinute="59" />
+
+				<h:outputText value="Fim:" />
+				<p:calendar value="#{solicitacao.horarioFim}" pattern="HH:mm"
+					timeOnly="true" locale="pt_BR" timeZone="GMT-3:00" minHour="07"
+					maxHour="22" />
+
+				<h:outputText value="Evento: " />
+				<p:inputText id="evento" value="#{solicitacao.evento}" size="40" />
+
+			</p:panelGrid>
+
+			<p:separator />
+
+			<p:commandButton value="Cadastrar"
+				action="#{solicitacaoBean.cadastrarSolicitacao(solicitacao)}"
+				ajax="false" update=":form" />
+
+		</p:panel>
+
+	</h:form>
+</h:body>
+</html>

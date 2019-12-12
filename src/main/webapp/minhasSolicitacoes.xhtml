@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>SIRES - Minhas Solicitações</title>
+	<ui:include src="/menu.xhtml" />
+	<style>
+	.background {
+	background-image: url("resources/images/background.png");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% 100%;
+	margin: 0px 0px 0px 0px;
+	</style>
+</h:head>
+<h:body styleClass="background">
+
+	<h:form id="form">
+		<p:growl id="menu" showDetail="true" sticky="false" life="3000" />
+
+		<p:panel header="Minhas Solicitações">
+
+			<p:commandButton title="Solicitar" value="Nova Solicitação"
+				update=":form" icon="ui-icon-document"
+				oncomplete="location.href='cadastrarSolicitacao.xhtml'">
+			</p:commandButton>
+
+			<p:separator />
+
+			<p:dataTable id="tab"
+				value="#{solicitacaoBean.mostrarMinhasSolicitacoes(loginBean.usuario)}" var="solicitacao"
+				rowKey="#{solicitacao.id}"
+				emptyMessage="Você não possui solicitações registradas."
+				style="text-align: center">
+
+				<p:column headerText="ID" width="10%" filterBy="#{solicitacao.id}">
+					<h:outputText value="#{solicitacao.id}" />
+				</p:column>
+
+				<p:column headerText="Sala" width="20%" filterBy="#{solicitacao.sala.nome}">
+					<h:outputText value="#{solicitacao.sala.nome}" />
+				</p:column>
+
+				<p:column headerText="Nome Requisitante" width="30%" filterBy="#{solicitacao.requisitante.nome}">
+					<h:outputText value="#{solicitacao.requisitante.nome}" />
+				</p:column>
+
+				<p:column headerText="Data" width="10%" filterBy="#{solicitacao.data}">
+					<h:outputText value="#{solicitacao.data}">
+						<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
+							timeZone="GMT-3:00" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Início" width="10%" filterBy="#{solicitacao.horarioInicio}">
+					<h:outputText value="#{solicitacao.horarioInicio}">
+						<f:convertDateTime pattern="HH:mm" locale="pt_BR"
+							timeZone="GMT-3:00" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Fim" width="10%" filterBy="#{solicitacao.horarioFim}">
+					<h:outputText value="#{solicitacao.horarioFim}">
+						<f:convertDateTime pattern="HH:mm" locale="pt_BR"
+							timeZone="GMT-3:00" />
+					</h:outputText>
+				</p:column>
+
+				<p:column headerText="Status" width="10%" filterBy="#{solicitacao.status}">
+					<h:outputText value="#{(solicitacao.status)}" />
+				</p:column>
+
+			<!--	<p:column headerText="Aprovar?" width="15%">
+					<p:commandButton title="Aprovar" value="S"
+						oncomplete="PF('confirmationA').show();" update=":form:confirmA">
+						<f:setPropertyActionListener value="#{solicitacao}"
+							target="#{solicitacaoBean.solicitacao}" />
+					</p:commandButton>
+
+					<p:commandButton title="Reprovar" value="N"
+						oncomplete="PF('confirmationN').show();" update=":form:confirmN">
+						<f:setPropertyActionListener value="#{solicitacao}"
+							target="#{solicitacaoBean.solicitacao}" />
+					</p:commandButton>
+				</p:column>
+				-->
+			</p:dataTable>
+		</p:panel>
+
+		<!--<p:dialog id="confirmA" appendToBody="true" closable="false"
+			resizable="false" modal="true" widgetVar="confirmationA">
+			<h:outputText
+				value="Tem certeza de que quer aprovar essa solicitação?" />
+			<br />
+			<center>
+				<p:commandButton value="Sim"
+					action="#{solicitacaoBean.aprovarSolicitacao(solicitacaoBean.solicitacao)}"
+					ajax="false" update=":form"
+					oncomplete="PF('confirmationA').hide();" />
+				<p:commandButton value="Não"
+					oncomplete="PF('confirmationA').hide();" />
+			</center>
+		</p:dialog>
+  -->
+  <!--
+		<p:dialog id="confirmN" appendToBody="true" closable="false"
+			resizable="false" modal="true" widgetVar="confirmationN">
+			<h:outputText
+				value="Tem certeza de que quer reprovar essa solicitação?" />
+			<br />
+			<center>
+				<p:commandButton value="Sim"
+					action="#{solicitacaoBean.reprovarSolicitacao(solicitacaoBean.solicitacao)}"
+					ajax="false" update=":form"
+					oncomplete="PF('confirmationN').hide();" />
+				<p:commandButton value="Não"
+					oncomplete="PF('confirmationN').hide();" />
+			</center>
+		</p:dialog>
+	-->
+	</h:form>
+</h:body>
+</html>

@@ -4,9 +4,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
 <h:head>
-	<title>Login</title>
+	<title>SIRES - Login</title>
 	<h:outputStylesheet library="css" name="bootstrap.css" />
 	<style>
 .background {
@@ -33,11 +35,11 @@
 
 .content {
 	width: 100vw;
-	height: 100vh;
+	height: 90vh;
 	display: flex;
 	flex-direction: row;
 	justify-content: center;
-	align-items: center
+	align-items: center;
 }
 
 .box {
@@ -58,14 +60,20 @@
 	margin-bottom: 25px;
 }
 
-#div-btn{
-text-align: right;
+#div-btn {
+	text-align: right;
 }
-
 </style>
 </h:head>
 <h:body styleClass="background">
-	<h:form styleClass="form">
+
+	<c:if test="${loginBean.usuarioLogado == true}">
+		<script>
+			location.href = '/sires/index.xhtml';
+		</script>
+	</c:if>
+
+	<h:form id="form">
 		<div class="content">
 			<div class="box">
 				<div id="logo">
@@ -75,22 +83,63 @@ text-align: right;
 					<h1>SIRES</h1>
 					<h3>Sistema de Reserva de Salas</h3>
 				</div>
+				<p:growl id="growl" showDetail="true" sticky="false" life="3000" />
+
 				<h:panelGrid columns="2" width="100%" style="text-align:right">
-					<h:outputText value="Login:" />
-					<p:inputText id="inpLogin">
-					<f:passThroughAttribute name="placeholder" value="SIAPE" />
-					</p:inputText>
+					<h:outputLabel for="siape" value="SIAPE:" />
+					<p:inputText value="#{loginBean.usuario.siape}" id="siape"
+						label="SIAPE" maxlength="7" />
 				</h:panelGrid>
 				<h:panelGrid columns="2" width="100%" style="text-align:right">
 					<h:outputText value="Senha:" />
-					<p:password id="inpSenha" />
+					<p:password id="inpSenha" value="#{loginBean.usuario.senha}" />
 				</h:panelGrid>
+
 				<div id="div-btn">
-				<p:commandButton value="Visitante" action="index.xhtml?faces-redirect=true" ajax="false" styleClass="botao" />
-				<p:commandButton value="Acessar" styleClass="botao" />
+					<p:commandButton id="acessar" value="Acessar" styleClass="botao"
+						action="#{loginBean.logar}" onclick="pb" update="growl" />
+					<p:commandButton value="Visitante"
+						action="indexVisitante.xhtml?faces-redirect=true" ajax="false"
+						styleClass="botao" />
+					<br />
+					<p:commandButton id="btnCadastrar" value="Cadastre-se"
+						styleClass="botao" update=":form:cadastrar"
+						oncomplete="PF('cadastrarU').show();">
+						<f:setPropertyActionListener target="#{usuarioBean.usuario}"
+							value="#{usuario}" />
+					</p:commandButton>
 				</div>
 			</div>
 		</div>
+		<p:dialog id="cadastrar" header="Cadastro de Usuário"
+			widgetVar="cadastrarU" modal="true" resizable="false" dynamic="false"
+			draggable="false">
+			<p:panelGrid columns="2">
+				<h:outputText value="SIAPE: " />
+				<p:inputText id="siapeC" value="#{usuarioBean.usuario.siape}"
+					size="40" maxlength="7" />
+				<h:outputText value="Senha: " />
+				<p:password id="senhaC" value="#{usuarioBean.usuario.senha}"
+					size="40" />
+				<h:outputText value="Nome: " />
+				<p:inputText id="nomeC" value="#{usuarioBean.usuario.nome}"
+					size="40" />
+				<h:outputText value="Email: " />
+				<p:inputText id="emailC" value="#{usuarioBean.usuario.email}"
+					size="40" />
+				<h:outputText value="Status" />
+				<p:selectOneMenu value="#{usuarioBean.usuario.statusAdmin}">
+					<f:selectItem itemLabel="Servidor" itemValue="#{false}" />
+				</p:selectOneMenu>
+			</p:panelGrid>
+
+			<p:separator />
+			<center>
+				<p:commandButton value="Cadastrar"
+					action="#{usuarioBean.cadastrarNovoUsuario(usuarioBean.usuario)}"
+					ajax="false" update=":form" />
+			</center>
+		</p:dialog>
 	</h:form>
 </h:body>
 </html>

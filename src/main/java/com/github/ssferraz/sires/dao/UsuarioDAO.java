@@ -3,88 +3,136 @@ package com.github.ssferraz.sires.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
 
+import com.github.ssferraz.sires.connection.ConnectionFactory;
 import com.github.ssferraz.sires.entity.Usuario;
 
-public class UsuarioDAO {
+public class UsuarioDAO{
 
-	private static UsuarioDAO instance;
-	protected EntityManager entityManager;
-	private EntityManagerFactory emf = null;
 
-	public static UsuarioDAO getInstance() {
-		if (instance == null) {
-			instance = new UsuarioDAO();
-		}
-		return instance;
-	}
+	// Salvar no banco
+	public void save(Usuario usuario) {
+		EntityManager em = new ConnectionFactory().getConnection();
 
-	public UsuarioDAO() {
-		entityManager = getEntityManager();
-	}
-
-	private EntityManager getEntityManager() {
-		emf = Persistence.createEntityManagerFactory("siresPU");
-		if (entityManager == null) {
-			entityManager = emf.createEntityManager();
-		}
-
-		return entityManager;
-	}
-
-	public Usuario getById(int id) {
-		return entityManager.find(Usuario.class, id);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<Usuario> findAll() {
-		List<Usuario> listaRetorno = this.entityManager.createQuery("from " + Usuario.class.getName()).getResultList();
-		this.entityManager.close();
-		return listaRetorno;
-	}
-
-	public void persist(Usuario usuario) {
 		try {
-			entityManager.getTransaction().begin();
-			entityManager.persist(usuario);
-			entityManager.getTransaction().commit();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
+			em.getTransaction().begin();
+			em.persist(usuario);
+			em.getTransaction().commit();
+
+		} catch (Exception e) {
+			System.err.println(e);
+			em.getTransaction().rollback();
+		} finally {
+			em.close();
 		}
 	}
 
+	// Atualizar no banco
 	public void update(Usuario usuario) {
+		EntityManager em = new ConnectionFactory().getConnection();
+
 		try {
-			entityManager.getTransaction().begin();
-			entityManager.merge(usuario);
-			entityManager.getTransaction().commit();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
+			em.getTransaction().begin();
+			em.merge(usuario);
+			em.getTransaction().commit();
+
+		} catch (Exception e) {
+			System.err.println(e);
+			em.getTransaction().rollback();
+		} finally {
+			em.close();
 		}
 	}
 
 	public void remove(Usuario usuario) {
+		EntityManager em = new ConnectionFactory().getConnection();
+
 		try {
-			entityManager.getTransaction().begin();
-			usuario = entityManager.find(Usuario.class, usuario.getId());
-			entityManager.remove(usuario);
-			entityManager.getTransaction().commit();
-		} catch (Exception ex) {
-			ex.printStackTrace();
-			entityManager.getTransaction().rollback();
+			em.getTransaction().begin();
+			em.remove(usuario);
+			em.getTransaction().commit();
+
+		} catch (Exception e) {
+			System.err.println(e);
+			em.getTransaction().rollback();
+		} finally {
+			em.close();
+		}
+	}
+	
+	public void removeById(Integer id) {
+		EntityManager em = new ConnectionFactory().getConnection();
+
+		try {
+
+			Usuario usuario = em.find(Usuario.class, id);
+
+			em.getTransaction().begin();
+			em.remove(usuario);
+			em.getTransaction().commit();
+
+		} catch (Exception e) {
+			System.err.println(e);
+			em.getTransaction().rollback();
+		} finally {
+			em.close();
 		}
 	}
 
-	public void removeById(int id) {
+	// Recuperar por ID
+	public Usuario getById(Integer id) {
+
+		EntityManager em = new ConnectionFactory().getConnection();
+
+		Usuario usuario = null;
+
 		try {
-			Usuario usuario = getById(id);
-			remove(usuario);
-		} catch (Exception ex) {
-			ex.printStackTrace();
+			usuario = em.find(Usuario.class, id);
+		} catch (Exception e) {
+			System.err.println(e);
+		} finally {
+			em.close();
 		}
+
+		return usuario;
+	}
+	
+	// Recuperar por Siape
+	@SuppressWarnings("unchecked")
+		public List<Usuario> getBySiape(String siape) {
+
+			EntityManager em = new ConnectionFactory().getConnection();
+
+			List<Usuario> usuarios = null;
+
+			try {
+				usuarios = em.createQuery("from Usuario where siape = " + siape).getResultList();
+			} catch (Exception e) {
+				System.err.println(e);
+			} finally {
+				em.close();
+			}
+
+			return usuarios;
+		}
+		
+		
+	// Recuperar Todos os Registros
+	@SuppressWarnings("unchecked")
+	public List<Usuario> findAll() {
+
+		EntityManager em = new ConnectionFactory().getConnection();
+
+		List<Usuario> lista = null;
+
+		try {
+			lista = em.createQuery("from Usuario order by id asc").getResultList();
+		} catch (Exception e) {
+			System.err.println(e);
+		} finally {
+			em.close();
+		}
+
+		return lista;
 	}
 }

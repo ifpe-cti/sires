@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>SIRES - Atualizar Meus Dados</title>
+	<ui:include src="/menu.xhtml" />
+	<style>
+	.background {
+	background-image: url("resources/images/background.png");
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-size: 100% 100%;
+	margin: 0px 0px 0px 0px;
+</style>
+</h:head>
+<h:body styleClass="background">
+
+	<h:form id="form">
+
+		<p:growl id="menu" showDetail="true" sticky="false" life="3000" />
+
+		<p:panel header="Atualizar Meus Dados">
+
+			<p:panelGrid columns="2" styleClass="grid">
+
+				<h:outputText value="SIAPE:" />
+				<h:outputText id="siape" value="#{loginBean.usuario.siape}" size="40"/>
+
+				<h:outputText value="Senha: " />
+				<p:password id="senha" value="#{loginBean.usuario.senha}" size="40"/>
+
+				<h:outputText value="Nome: " />
+				<p:inputText id="nome" value="#{loginBean.usuario.nome}" size="40" placeholder="#{loginBean.usuario.nome}"/>
+
+				<h:outputText value="Email: " />
+				<p:inputText id="email" value="#{loginBean.usuario.email}" size="40" placeholder="#{loginBean.usuario.email}"/>
+
+				<h:outputText value="Status Administrador: " />
+				<h:outputText value="#{(loginBean.mostrarStatus(loginBean.usuario))}"/>
+
+			</p:panelGrid>
+
+			<p:separator />
+
+			<p:commandButton value="Atualizar"
+				action="#{usuarioBean.atualizarMeusDados(loginBean.usuario)}" ajax="false"
+				update=":form" />
+
+		</p:panel>
+
+	</h:form>
+</h:body>
+</html>

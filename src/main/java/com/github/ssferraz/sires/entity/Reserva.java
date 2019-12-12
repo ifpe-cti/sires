@@ -2,6 +2,8 @@ package com.github.ssferraz.sires.entity;
 
 import java.io.Serializable;
 
+import javax.faces.bean.ManagedBean;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,20 +12,27 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 @Entity
+@ManagedBean(name = "reserva")
 @Table(name = "reserva")
 public class Reserva implements Serializable {
 
 	private static final long serialVersionUID = 225395015811535450L;
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@OneToOne(optional = false)
+	
+	@OneToOne(optional = false) //, cascade = CascadeType.REMOVE
 	private Solicitacao solicitacao;
 
 	public Reserva() {
 
 	}
 
+	public int getId() {
+		return id;
+	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -33,6 +42,13 @@ public class Reserva implements Serializable {
 		this.id = id;
 		this.solicitacao = solicitacao;
 	}
+	
+	
+	public Reserva(Solicitacao solicitacao) {
+		super();
+		this.solicitacao = solicitacao;
+	}
+	
 
 	public Solicitacao getSolicitacao() {
 		return solicitacao;
@@ -40,10 +56,6 @@ public class Reserva implements Serializable {
 
 	public void setSolicitacao(Solicitacao solicitacao) {
 		this.solicitacao = solicitacao;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	@Override

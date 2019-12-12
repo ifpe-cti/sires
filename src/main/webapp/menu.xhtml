@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<h:head>
+	<title>SIRES - Menu</title>
+</h:head>
+<h:body>
+	<c:if test="${loginBean.usuarioLogado == false}">
+		<script>
+			location.href = '/sires/login.xhtml';
+		</script>
+	</c:if>
+
+	<h:form id="formMenu">
+		<p:menubar styleClass="ui-menubar">
+			<p:menuitem value="Início"
+				oncomplete="location.href='/sires/index.xhtml'" />
+
+			<p:menuitem value="Reservas"
+				oncomplete="location.href='/sires/reservas.xhtml'" />
+
+			<p:menuitem value="Salas" rendered="#{loginBean.usuario.statusAdmin}"
+				oncomplete="location.href='/sires/salas.xhtml'" />
+
+			<p:menuitem value="Solicitações"
+				rendered="#{loginBean.usuario.statusAdmin}"
+				oncomplete="location.href='/sires/solicitacoes.xhtml'" />
+
+			<p:menuitem value="Minhas Solicitações"
+				oncomplete="location.href='/sires/minhasSolicitacoes.xhtml'" />
+
+			<p:menuitem value="Usuários"
+				rendered="#{loginBean.usuario.statusAdmin}"
+				oncomplete="location.href='/sires/usuarios.xhtml'" />
+
+			<f:facet name="options">
+				#{loginBean.usuario.nome} - #{loginBean.mostrarStatus(loginBean.usuario)}
+				<p:commandButton oncomplete="location.href='/sires/alterarDados.xhtml'" value="Alterar Meus Dados" icon="ui-icon-pencil" update=":formMenu"/>
+				<p:commandButton action="#{loginBean.sair}" value="Sair" icon="ui-icon-power" ajax="false" update=":formMenu"/>
+			</f:facet>
+
+		</p:menubar>
+		<f:facet name="info">
+			<p:outputLabel style="margin: 1px 10px 1px 1px;"
+				value="Usuário: #{(loginBean.usuario.nome)} - Administrador: #{(loginBean.statusAdminString(loginBean.usuario))}" />
+		</f:facet>
+	</h:form>
+</h:body>
+</html>
