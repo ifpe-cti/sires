@@ -162,7 +162,8 @@ public class SolicitacaoDAO {
 		List<Solicitacao> lista = null;
 
 		try {
-			lista = em.createQuery("from Solicitacao where requisitante_id = " + usuario.getId() + " order by id asc").getResultList();
+			lista = em.createQuery("from Solicitacao where requisitante_id = " + usuario.getId() + " order by id asc")
+					.getResultList();
 		} catch (Exception e) {
 			System.err.println(e);
 		} finally {
@@ -171,5 +172,32 @@ public class SolicitacaoDAO {
 
 		return lista;
 	}
+
+/*	@SuppressWarnings("unchecked")
+	public List<Solicitacao> verificaDisponibilidade(Solicitacao solicitacao) {
+		EntityManager em = new ConnectionFactory().getConnection();
+		List<Solicitacao> lista = null;
+		try {
+			lista = em.createQuery("from Solicitacao where data = " + solicitacao.getData() + " and sala_id = "
+					+ solicitacao.getSala().getId() + "and ((horarioInicio <= " + solicitacao.getHorarioInicio()
+					+ "and horarioFim 	>= " + solicitacao.getHorarioFim() + ") or (horarioInicio <= "
+					+ solicitacao.getHorarioInicio() + " and horarioFim >= "+ solicitacao.getHorarioFim()+")").getResultList();
+		} catch (Exception e) {
+			System.err.println(e);
+		} finally {
+			em.close();
+		}
+
+		return lista;
+	}
+	
+	public boolean ehDisponivel(Solicitacao solicitacao) {
+		List<Solicitacao> lista = verificaDisponibilidade(solicitacao);
+		if(lista.isEmpty()) {
+			return true;
+		} else {
+			return false;	
+		}
+	}*/
 
 }

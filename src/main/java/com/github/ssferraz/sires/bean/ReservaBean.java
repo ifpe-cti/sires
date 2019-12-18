@@ -47,8 +47,7 @@ public class ReservaBean implements Serializable {
 		System.out.println(reserva.toString());
 		
 		daoR.remove(reserva);
-		
-
+	
 		FacesContext.getCurrentInstance().addMessage(null,
 
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Reserva excluída com sucesso!"));

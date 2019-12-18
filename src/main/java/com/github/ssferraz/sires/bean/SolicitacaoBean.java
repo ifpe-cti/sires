@@ -61,12 +61,15 @@ public class SolicitacaoBean implements Serializable {
 		}
 		solicitacao.setStatus("Pendente");
 		daoS.save(solicitacao);
+		System.out.println(solicitacao.toString());
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Solicitação feita com sucesso!"));
 		return "solicitacoes.xhtml";
 	}
 
 	public String aprovarSolicitacao(Solicitacao solicitacao) {
+		
+	//	if(daoS.ehDisponivel(solicitacao)) {
 		
 		solicitacao.setStatus("Aprovada");
 
@@ -81,8 +84,13 @@ public class SolicitacaoBean implements Serializable {
 
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Solicitação aprovada!", "Agora ela é uma reserva!"));
-
 		return "solicitacoes.xhtml";
+	//	}else {
+	//		FacesContext.getCurrentInstance().addMessage(null,
+	//				new FacesMessage(FacesMessage.SEVERITY_INFO, "Reserva já existe!", "Impossível aprovar!"));
+	//		return "solicitacoes.xhtml";
+	//	}
+
 
 	}
 
