@@ -31,7 +31,7 @@ public class Sala implements Serializable, SampleEntity {
 	
 	@Column(nullable = false)
 	private String tipo;
-
+	
 	public Sala() {
 
 	}
@@ -42,7 +42,6 @@ public class Sala implements Serializable, SampleEntity {
 		this.bloco = bloco;
 		this.nome = nome;
 		this.tipo = tipo;
-
 	}
 	
 	public Sala(char bloco, String nome, String tipo) {
@@ -90,7 +89,7 @@ public class Sala implements Serializable, SampleEntity {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + bloco;
-		result = prime * result + id;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
 		result = prime * result + ((tipo == null) ? 0 : tipo.hashCode());
 		return result;
@@ -107,7 +106,10 @@ public class Sala implements Serializable, SampleEntity {
 		Sala other = (Sala) obj;
 		if (bloco != other.bloco)
 			return false;
-		if (id != other.id)
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
 			return false;
 		if (nome == null) {
 			if (other.nome != null)
@@ -126,5 +128,6 @@ public class Sala implements Serializable, SampleEntity {
 	public String toString() {
 		return "Sala [id=" + id + ", bloco=" + bloco + ", nome=" + nome + ", tipo=" + tipo + "]";
 	}
+
 
 }

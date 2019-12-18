@@ -33,9 +33,9 @@ h4 {
 
 #top-logo {
 	position: absolute;
-   	margin-left: 15px;
-   	margin-top: 15px;
-  }
+	margin-left: 15px;
+	margin-top: 15px;
+}
 
 #logo-name {
 	text-align: center;
@@ -43,7 +43,7 @@ h4 {
 
 #logo {
 	width: 32px;
-	height: 32px;	
+	height: 32px;
 }
 </style>
 </h:head>
@@ -68,14 +68,12 @@ h4 {
 	<h:form id="form">
 		<p:growl id="menu" showDetail="true" sticky="false" life="3000" />
 
-
 		<p:panel header="Reservas Registradas">
-
-			<div align="right">
-				<p:commandButton value="Sair"
-					action="/login.xhtml?faces-redirect=true" icon="ui-icon-power"
-					update="menu" />
-			</div>
+			<center>
+				<p:commandButton title="Voltar" value="Voltar" update=":form"
+					oncomplete="location.href='login.xhtml'">
+				</p:commandButton>
+			</center>
 
 			<p:separator />
 
@@ -109,20 +107,21 @@ h4 {
 				<p:column headerText="Início" width="10%"
 					filterBy="#{reserva.solicitacao.horarioInicio}">
 					<h:outputText value="#{reserva.solicitacao.horarioInicio}">
-						<f:convertDateTime pattern="hh:mm" locale="pt_BR"
+						<f:convertDateTime pattern="HH:mm" locale="pt_BR"
 							timeZone="GMT-3:00" />
 					</h:outputText>
 				</p:column>
 
 				<p:column headerText="Fim" width="10%"
-					filterBy="#{reserva.solicitacao.horarioInicio}">
+					filterBy="#{reserva.solicitacao.horarioFim}">
 					<h:outputText value="#{reserva.solicitacao.horarioFim}">
-						<f:convertDateTime pattern="hh:mm" locale="pt_BR"
+						<f:convertDateTime pattern="HH:mm" locale="pt_BR"
 							timeZone="GMT-3:00" />
 					</h:outputText>
 				</p:column>
-			</p:dataTable>
+		</p:dataTable>
 		</p:panel>
+
 
 	</h:form>
 </h:body>

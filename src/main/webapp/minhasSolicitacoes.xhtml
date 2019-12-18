@@ -28,7 +28,7 @@
 		<p:panel header="Minhas Solicitações">
 
 			<p:commandButton title="Solicitar" value="Nova Solicitação"
-				update=":form" icon="ui-icon-document"
+				update=":form"
 				oncomplete="location.href='cadastrarSolicitacao.xhtml'">
 			</p:commandButton>
 
@@ -54,8 +54,7 @@
 
 				<p:column headerText="Data" width="10%" filterBy="#{solicitacao.data}">
 					<h:outputText value="#{solicitacao.data}">
-						<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
-							timeZone="GMT-3:00" />
+						<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" />
 					</h:outputText>
 				</p:column>
 

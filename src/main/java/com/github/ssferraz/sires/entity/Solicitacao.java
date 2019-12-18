@@ -139,19 +139,18 @@ public class Solicitacao implements Serializable {
 		this.status = status;
 	}
 
-	
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((status == null) ? 0 : status.hashCode());
+		result = prime * result + ((data == null) ? 0 : data.hashCode());
 		result = prime * result + ((evento == null) ? 0 : evento.hashCode());
+		result = prime * result + ((horarioFim == null) ? 0 : horarioFim.hashCode());
+		result = prime * result + ((horarioInicio == null) ? 0 : horarioInicio.hashCode());
 		result = prime * result + id;
 		result = prime * result + ((requisitante == null) ? 0 : requisitante.hashCode());
 		result = prime * result + ((sala == null) ? 0 : sala.hashCode());
-		result = prime * result + ((data == null) ? 0 : data.hashCode());
-		result = prime * result + ((horarioInicio == null) ? 0 : horarioInicio.hashCode());
-		result = prime * result + ((horarioFim == null) ? 0 : horarioFim.hashCode());
+		result = prime * result + ((status == null) ? 0 : status.hashCode());
 		return result;
 	}
 
@@ -164,15 +163,25 @@ public class Solicitacao implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Solicitacao other = (Solicitacao) obj;
-		if (status == null) {
-			if (other.status != null)
+		if (data == null) {
+			if (other.data != null)
 				return false;
-		} else if (!status.equals(other.status))
+		} else if (!data.equals(other.data))
 			return false;
 		if (evento == null) {
 			if (other.evento != null)
 				return false;
 		} else if (!evento.equals(other.evento))
+			return false;
+		if (horarioFim == null) {
+			if (other.horarioFim != null)
+				return false;
+		} else if (!horarioFim.equals(other.horarioFim))
+			return false;
+		if (horarioInicio == null) {
+			if (other.horarioInicio != null)
+				return false;
+		} else if (!horarioInicio.equals(other.horarioInicio))
 			return false;
 		if (id != other.id)
 			return false;
@@ -186,22 +195,11 @@ public class Solicitacao implements Serializable {
 				return false;
 		} else if (!sala.equals(other.sala))
 			return false;
-		if (data == null) {
-			if (other.data != null)
+		if (status == null) {
+			if (other.status != null)
 				return false;
-		} else if (!data.equals(other.data))
+		} else if (!status.equals(other.status))
 			return false;
-		if (horarioInicio == null) {
-			if (other.horarioInicio != null)
-				return false;
-		} else if (!horarioInicio.equals(other.horarioInicio))
-			return false;
-		if (horarioFim == null) {
-			if (other.horarioFim != null)
-				return false;
-		} else if (!horarioFim.equals(other.horarioFim))
-			return false;
-		
 		return true;
 	}
 

@@ -1,28 +1,28 @@
 package com.github.ssferraz.sires;
 
-
+import java.util.Calendar;
 import java.util.Date;
-
-import com.github.ssferraz.sires.bean.ReservaBean;
-import com.github.ssferraz.sires.dao.SalaDAO;
-import com.github.ssferraz.sires.dao.SolicitacaoDAO;
-import com.github.ssferraz.sires.dao.UsuarioDAO;
-import com.github.ssferraz.sires.entity.Sala;
-import com.github.ssferraz.sires.entity.Solicitacao;
-import com.github.ssferraz.sires.entity.Usuario;
 
 public class Test {
 
 	public static void main(String[] args) {
-		
-		/*UsuarioDAO daoU = new UsuarioDAO();
-		Usuario u = new Usuario("1234567","admin","Maria da Silva","maria@ifpe.edu.br",true);
-		daoU.save(u);*/
-		
-		//ReservaBean r = new ReservaBean();
-		//System.out.println(r.getReserva().toString());
-		
-		
+
+	/*	int mes = c.get(Calendar.MONTH);
+		int mesAtual = mes +1;
+		System.out.println("Data/Hora atual: " + c.getTime());
+		System.out.println("Ano: " + c.get(Calendar.YEAR));
+		System.out.println("Mês: " + mesAtual);
+		System.out.println("Dia do Mês: " + c.get(Calendar.DAY_OF_MONTH));*/
+
+		/*
+		 * UsuarioDAO daoU = new UsuasrioDAO(); Usuario u = new
+		 * Usuario("1234567","admin","Maria da Silva","maria@ifpe.edu.br",true);
+		 * daoU.save(u);
+		 */
+
+		// ReservaBean r = new ReservaBean();
+		// System.out.println(r.getReserva().toString());
+
 //		SalaDAO daoSala = new SalaDAO();
 //		
 //		SolicitacaoDAO daoS = new SolicitacaoDAO();
@@ -35,7 +35,7 @@ public class Test {
 //		s.setSala(daoSala.getById(1));
 //		
 //		daoS.save(s);		
-		
+
 //		Usuario user = daoU.getById(1);
 //		System.out.println(user.getNome());
 //		

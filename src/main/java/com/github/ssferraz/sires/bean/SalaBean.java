@@ -62,7 +62,6 @@ public class SalaBean implements Serializable {
 	}
 
 	public String removerSala(Sala sala) {
-		System.out.println(sala.getId());
 		dao.remove(sala.getId());
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Sucesso!", "Sala removida!"));
@@ -73,5 +72,4 @@ public class SalaBean implements Serializable {
 		List<Sala> salas = dao.findAll();
 		return salas;
 	}
-
 }

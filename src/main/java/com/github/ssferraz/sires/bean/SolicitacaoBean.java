@@ -24,7 +24,7 @@ import com.github.ssferraz.sires.entity.Usuario;
 public class SolicitacaoBean implements Serializable {
 
 	private static final long serialVersionUID = -7367875865580540503L;
-
+	
 	private SolicitacaoDAO daoS = new SolicitacaoDAO();
 	ReservaBean rB = new ReservaBean();
 	private Solicitacao solicitacao = new Solicitacao();
@@ -37,8 +37,8 @@ public class SolicitacaoBean implements Serializable {
 		this.solicitacao = solicitacao;
 	}
 
+	@SuppressWarnings("deprecation")
 	public String cadastrarSolicitacao(Solicitacao solicitacao) {
-
 		if (solicitacao.getData() == null || solicitacao.getHorarioInicio() == null
 				|| solicitacao.getHorarioFim() == null || solicitacao.getSala() == null
 				|| solicitacao.getRequisitante() == null || solicitacao.getEvento().equals("")) {
@@ -46,19 +46,19 @@ public class SolicitacaoBean implements Serializable {
 					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "Preencha todos os campos!"));
 			return "";
 		}
-		
-		if(solicitacao.getData().before(new Date())) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "A data não pode ser anterior a data de hoje!"));
-			return "";
-		}
-		
-		if(solicitacao.getHorarioInicio().after(solicitacao.getHorarioFim())) {
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!", "O horário de início não pode ser depois do horário de finalização.!"));
+
+		Date d = new Date();
+		if (solicitacao.getData().getDate() < (d.getDate())) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!",
+					"A data não pode ser anterior a data de hoje!"));
 			return "";
 		}
 
+		if (solicitacao.getHorarioInicio().after(solicitacao.getHorarioFim())) {
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!",
+					"O horário de início não pode ser depois do horário de finalização.!"));
+			return "";
+		}
 		solicitacao.setStatus("Pendente");
 		daoS.save(solicitacao);
 		FacesContext.getCurrentInstance().addMessage(null,
@@ -66,8 +66,8 @@ public class SolicitacaoBean implements Serializable {
 		return "solicitacoes.xhtml";
 	}
 
-	public String aprovarSolicitacao(Solicitacao solicitacao) {	
-		
+	public String aprovarSolicitacao(Solicitacao solicitacao) {
+
 		solicitacao.setStatus("Aprovada");
 
 		daoS.update(solicitacao);
@@ -81,7 +81,9 @@ public class SolicitacaoBean implements Serializable {
 
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Solicitação aprovada!", "Agora ela é uma reserva!"));
+
 		return "solicitacoes.xhtml";
+
 	}
 
 	public String reprovarSolicitacao(Solicitacao solicitacao) {
@@ -89,12 +91,12 @@ public class SolicitacaoBean implements Serializable {
 
 		daoS.update(solicitacao);
 
-		Reserva reserva = new Reserva();
+		// Reserva reserva = new Reserva();
 
-		reserva.setSolicitacao(solicitacao);
+		// reserva.setSolicitacao(solicitacao);
 
-		ReservaDAO rd = new ReservaDAO();
-		rd.save(reserva);
+		// ReservaDAO rd = new ReservaDAO();
+		// rd.save(reserva);
 
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO,
 				"Solicitação reprovada!", "O Requisitante deve efeturar uma nova solicitação"));
@@ -123,7 +125,7 @@ public class SolicitacaoBean implements Serializable {
 
 		return usuarios;
 	}
-	
+
 	public Date mostrarHoje() {
 		return new Date();
 	}

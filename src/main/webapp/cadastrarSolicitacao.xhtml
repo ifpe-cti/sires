@@ -28,8 +28,7 @@
 		<p:panel header="Registrar Solicitação">
 
 			<p:panelGrid columns="2" styleClass="grid">
-
-
+			
 				<h:outputText value="Sala: " />
 				<p:selectOneMenu value="#{solicitacao.sala}" converter="generic"
 					filter="true" filterMatchMode="startsWith">
@@ -50,17 +49,17 @@
 
 				<h:outputText value="Data: " />
 				<p:calendar id="brazilian" value="#{solicitacao.data}"
-					locale="pt_BR" pattern="dd/MM/yyyy" timeZone="GMT-3:00">
+					locale="pt_BR" pattern="dd/MM/yyyy">
 				</p:calendar>
 
 				<h:outputText value="Início:" />
 				<p:calendar value="#{solicitacao.horarioInicio}" pattern="HH:mm"
-					timeOnly="true" locale="pt_BR" timeZone="GMT-3:00" minHour="07"
+					timeOnly="true" locale="pt_BR" minHour="07"
 					maxHour="21" maxMinute="59" />
 
 				<h:outputText value="Fim:" />
 				<p:calendar value="#{solicitacao.horarioFim}" pattern="HH:mm"
-					timeOnly="true" locale="pt_BR" timeZone="GMT-3:00" minHour="07"
+					timeOnly="true" locale="pt_BR" minHour="07"
 					maxHour="22" />
 
 				<h:outputText value="Evento: " />

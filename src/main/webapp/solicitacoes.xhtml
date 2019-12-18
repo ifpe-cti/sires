@@ -12,13 +12,14 @@
 	<title>SIRES - Solicitações</title>
 	<ui:include src="/menu.xhtml" />
 	<style>
-	.background {
+.background {
 	background-image: url("resources/images/background.png");
 	background-repeat: no-repeat;
 	background-attachment: fixed;
 	background-size: 100% 100%;
 	margin: 0px 0px 0px 0px;
-	</style>
+}
+</style>
 </h:head>
 <h:body styleClass="background">
 
@@ -34,7 +35,7 @@
 		<p:panel header="Solicitações Registradas">
 
 			<p:commandButton title="Solicitar" value="Nova Solicitação"
-				update=":form" icon="ui-icon-document"
+				update=":form"
 				oncomplete="location.href='cadastrarSolicitacao.xhtml'">
 			</p:commandButton>
 
@@ -50,36 +51,44 @@
 					<h:outputText value="#{solicitacao.id}" />
 				</p:column>
 
-				<p:column headerText="Sala" width="20%" filterBy="#{solicitacao.sala.nome}">
+				<p:column headerText="Sala" width="20%"
+					filterBy="#{solicitacao.sala.nome}">
 					<h:outputText value="#{solicitacao.sala.nome}" />
 				</p:column>
 
-				<p:column headerText="Nome Requisitante" width="30%" filterBy="#{solicitacao.requisitante.nome}">
+				<p:column headerText="Nome Requisitante" width="30%"
+					filterBy="#{solicitacao.requisitante.nome}">
 					<h:outputText value="#{solicitacao.requisitante.nome}" />
 				</p:column>
 
-				<p:column headerText="Data" width="10%" filterBy="#{solicitacao.data}">
+				<!-- Alterei -->
+
+				<p:column headerText="Data" width="10%"
+					filterBy="#{solicitacao.data}">
 					<h:outputText value="#{solicitacao.data}">
-						<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
-							timeZone="GMT-3:00" />
+						<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" />
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Início" width="10%" filterBy="#{solicitacao.horarioInicio}">
+
+				<p:column headerText="Início" width="10%"
+					filterBy="#{solicitacao.horarioInicio}">
 					<h:outputText value="#{solicitacao.horarioInicio}">
 						<f:convertDateTime pattern="HH:mm" locale="pt_BR"
 							timeZone="GMT-3:00" />
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Fim" width="10%" filterBy="#{solicitacao.horarioFim}">
+				<p:column headerText="Fim" width="10%"
+					filterBy="#{solicitacao.horarioFim}">
 					<h:outputText value="#{solicitacao.horarioFim}">
 						<f:convertDateTime pattern="HH:mm" locale="pt_BR"
 							timeZone="GMT-3:00" />
 					</h:outputText>
 				</p:column>
 
-				<p:column headerText="Status" width="10%" filterBy="#{solicitacao.status}">
+				<p:column headerText="Status" width="10%"
+					filterBy="#{solicitacao.status}">
 					<h:outputText value="#{(solicitacao.status)}" />
 				</p:column>
 
