@@ -3,7 +3,6 @@ package com.github.ssferraz.sires.entity;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
-import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;

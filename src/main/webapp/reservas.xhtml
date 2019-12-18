@@ -31,110 +31,68 @@
 </h:head>
 
 <h:body styleClass="background">
-
-
-
 	<h:form id="form">
 
 		<p:growl id="menu" showDetail="true" sticky="false" life="3000" />
 
-
-
 		<p:panel header="Reservas Registradas">
-
-
-
 			<p:separator />
-
-
-
-			<p:dataTable id="tab" value="#{reservaBean.mostrarReservasFuturas()}"
+			<p:dataTable id="tab" value="#{reservaBean.mostrarReservas()}"
 				var="reserva" rowKey="#{reserva.id}"
 				emptyMessage="Não há reservas registradas."
 				style="text-align: center">
 
-
-
 				<p:column headerText="ID" width="10%" filterBy="#{reserva.id}">
-
 					<h:outputText value="#{reserva.id}" />
-
 				</p:column>
-
-
 
 				<p:column headerText="Sala" width="20%"
 					filterBy="#{reserva.solicitacao.sala.nome}">
-
 					<h:outputText value="#{reserva.solicitacao.sala.nome}" />
-
 				</p:column>
-
-
 
 				<p:column headerText="Nome Requisitante" width="30%"
 					filterBy="#{reserva.solicitacao.requisitante.nome}">
-
 					<h:outputText value="#{reserva.solicitacao.requisitante.nome}" />
-
 				</p:column>
-
-
 
 				<p:column headerText="Data" width="10%"
 					filterBy="#{reserva.solicitacao.data}">
 
 					<h:outputText value="#{reserva.solicitacao.data}">
-
-						<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
-							timeZone="GMT-3:00" />
-
+						<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" />
 					</h:outputText>
-
 				</p:column>
 
 
 
 				<p:column headerText="Início" width="10%"
 					filterBy="#{reserva.solicitacao.horarioInicio}">
-
 					<h:outputText value="#{reserva.solicitacao.horarioInicio}">
-
 						<f:convertDateTime pattern="HH:mm" locale="pt_BR"
 							timeZone="GMT-3:00" />
-
 					</h:outputText>
-
 				</p:column>
-				
+
 				<p:column headerText="Fim" width="10%"
 					filterBy="#{reserva.solicitacao.horarioFim}">
-
 					<h:outputText value="#{reserva.solicitacao.horarioFim}">
-
 						<f:convertDateTime pattern="HH:mm" locale="pt_BR"
 							timeZone="GMT-3:00" />
-
 					</h:outputText>
-
 				</p:column>
 
 
 
-				<p:column headerText="Remover" width="10%">
-
+				<p:column headerText="Remover" width="10%"
+					rendered="#{loginBean.usuario.statusAdmin}">
 					<p:commandButton title="Excluir" icon="ui-icon-trash"
 						oncomplete="PF('confirmation').show();" update=":form:confirm">
-
 						<f:setPropertyActionListener value="#{reserva}"
 							target="#{reservaBean.reserva}" />
-
 					</p:commandButton>
-
 				</p:column>
-
 			</p:dataTable>
-
 		</p:panel>
 
 		<p:dialog id="confirm" appendToBody="true" draggable="false"
@@ -150,9 +108,7 @@
 				<p:commandButton value="Sim"
 					action="#{reservaBean.removerReserva(reservaBean.reserva)}"
 					ajax="false" update=":form" oncomplete="PF('confirmation').hide();" />
-
 				<p:commandButton value="Não" oncomplete="PF('confirmation').hide();" />
-
 			</center>
 
 		</p:dialog>

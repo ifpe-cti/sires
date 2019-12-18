@@ -67,7 +67,7 @@ public class SolicitacaoBean implements Serializable {
 	}
 
 	public String aprovarSolicitacao(Solicitacao solicitacao) {
-
+		
 		solicitacao.setStatus("Aprovada");
 
 		daoS.update(solicitacao);

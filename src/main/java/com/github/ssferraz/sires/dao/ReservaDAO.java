@@ -42,8 +42,25 @@ public class ReservaDAO {
 			em.close();
 		}
 	}
+	
+	public void remove(Reserva reserva) {
+		EntityManager em = new ConnectionFactory().getConnection();
+
+		try {
+			em.getTransaction().begin();
+			em.remove(reserva);
+			em.getTransaction().commit();
+
+		} catch (Exception e) {
+			System.err.println(e);
+			em.getTransaction().rollback();
+		} finally {
+			em.close();
+		}
+	}
+	
 	//Remover
-	public void remove(Integer id) {
+	public void removeById(Integer id) {
 		EntityManager em = new ConnectionFactory().getConnection();
 
 		try {
@@ -98,4 +115,5 @@ public class ReservaDAO {
 
 		return lista;
 	}
+
 }

@@ -77,7 +77,7 @@ h4 {
 
 			<p:separator />
 
-			<p:dataTable id="tab" value="#{reservaBean.mostrarReservasFuturas()}"
+			<p:dataTable id="tab" value="#{reservaBean.mostrarReservas()}"
 				var="reserva" rowKey="#{reserva.id}"
 				emptyMessage="Não há reservas registradas."
 				style="text-align: center">
@@ -99,8 +99,7 @@ h4 {
 				<p:column headerText="Data" width="10%"
 					filterBy="#{reserva.solicitacao.data}">
 					<h:outputText value="#{reserva.solicitacao.data}">
-						<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"
-							timeZone="GMT-3:00" />
+						<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"/>
 					</h:outputText>
 				</p:column>
 
