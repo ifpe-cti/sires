@@ -51,17 +51,20 @@
 					<h:outputText value="#{solicitacao.id}" />
 				</p:column>
 
-				<p:column headerText="Sala" width="20%"
+				<p:column headerText="Sala" width="10%"
 					filterBy="#{solicitacao.sala.nome}">
 					<h:outputText value="#{solicitacao.sala.nome}" />
 				</p:column>
 
-				<p:column headerText="Nome Requisitante" width="30%"
+				<p:column headerText="Nome Requisitante" width="20%"
 					filterBy="#{solicitacao.requisitante.nome}">
 					<h:outputText value="#{solicitacao.requisitante.nome}" />
 				</p:column>
 
-				<!-- Alterei -->
+				<p:column headerText="Evento" width="30%"
+					filterBy="#{solicitacao.evento}">
+					<h:outputText value="#{(solicitacao.evento)}" />
+				</p:column>
 
 				<p:column headerText="Data" width="10%"
 					filterBy="#{solicitacao.data}">

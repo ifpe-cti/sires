@@ -1,13 +1,16 @@
 package com.github.ssferraz.sires.entity;
 
 import java.io.Serializable;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.github.ssferraz.sires.utils.Md5;
@@ -39,8 +42,8 @@ public class Usuario implements Serializable, SampleEntity {
 	@Column(nullable = false)
 	private boolean statusAdmin;
 
-	//@OneToMany(mappedBy="solicitacao", cascade=CascadeType.REMOVE)
-	//private List<Solicitacao> solicitacoes;
+	@OneToMany(cascade = CascadeType.REMOVE, mappedBy = "requisitante")
+	private List<Solicitacao> solicitacoes;
 	
 	public Usuario() {
 
@@ -113,6 +116,15 @@ public class Usuario implements Serializable, SampleEntity {
 	public void setStatusAdmin(boolean statusAdmin) {
 		this.statusAdmin = statusAdmin;
 	}
+	
+	public List<Solicitacao> getSolicitacoes() {
+		return solicitacoes;
+	}
+
+	public void setSolicitacoes(List<Solicitacao> solicitacoes) {
+		this.solicitacoes = solicitacoes;
+	}
+	
 
 	@Override
 	public int hashCode() {

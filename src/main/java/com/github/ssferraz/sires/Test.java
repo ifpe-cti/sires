@@ -1,16 +1,18 @@
 package com.github.ssferraz.sires;
 
-import com.github.ssferraz.sires.bean.SolicitacaoBean;
-import com.github.ssferraz.sires.dao.SolicitacaoDAO;
-import com.github.ssferraz.sires.entity.Sala;
+import java.util.List;
+
+import javax.persistence.EntityManager;
+
+import com.github.ssferraz.sires.connection.ConnectionFactory;
 import com.github.ssferraz.sires.entity.Solicitacao;
 
 public class Test {
 
 	public static void main(String[] args) {
 		
-		
 
+		
 		
 	/*	int mes = c.get(Calendar.MONTH);
 		int mesAtual = mes +1;

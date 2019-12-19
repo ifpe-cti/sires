@@ -86,20 +86,25 @@ h4 {
 					<h:outputText value="#{reserva.id}" />
 				</p:column>
 
-				<p:column headerText="Sala" width="20%"
+				<p:column headerText="Sala" width="10%"
 					filterBy="#{reserva.solicitacao.sala.nome}">
 					<h:outputText value="#{reserva.solicitacao.sala.nome}" />
 				</p:column>
 
-				<p:column headerText="Nome Requisitante" width="30%"
+				<p:column headerText="Nome Requisitante" width="20%"
 					filterBy="#{reserva.solicitacao.requisitante.nome}">
 					<h:outputText value="#{reserva.solicitacao.requisitante.nome}" />
+				</p:column>
+
+				<p:column headerText="Evento" width="30%"
+					filterBy="#{reserva.solicitacao.evento}">
+					<h:outputText value="#{(reserva.solicitacao.evento)}" />
 				</p:column>
 
 				<p:column headerText="Data" width="10%"
 					filterBy="#{reserva.solicitacao.data}">
 					<h:outputText value="#{reserva.solicitacao.data}">
-						<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR"/>
+						<f:convertDateTime pattern="dd/MM/yyyy" locale="pt_BR" />
 					</h:outputText>
 				</p:column>
 
@@ -118,7 +123,7 @@ h4 {
 							timeZone="GMT-3:00" />
 					</h:outputText>
 				</p:column>
-		</p:dataTable>
+			</p:dataTable>
 		</p:panel>
 
 

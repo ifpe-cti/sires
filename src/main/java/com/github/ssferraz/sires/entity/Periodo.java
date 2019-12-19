@@ -19,8 +19,6 @@ public class Periodo implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
-	@Temporal(TemporalType.DATE)
-	private Date date;
 	@Temporal(TemporalType.TIME)
 	private Date horarioInicio;
 	@Temporal(TemporalType.TIME)
@@ -29,21 +27,10 @@ public class Periodo implements Serializable {
 	public Periodo() {
 	}
 
-	public Periodo(int id, Date date, Date horarioinicio, Date horarioFim) {
-		super();
-		this.id = id;
-		this.date = date;
-		this.horarioInicio = horarioinicio;
+	public Periodo(Date horarioInicio, Date horarioFim) {
+		this.horarioInicio = horarioInicio;
 		this.horarioFim = horarioFim;
 
-	}
-
-	public Date getDate() {
-		return date;
-	}
-
-	public void setDate(Date date) {
-		this.date = date;
 	}
 
 	public Date getHorarioInicio() {
@@ -74,7 +61,6 @@ public class Periodo implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((date == null) ? 0 : date.hashCode());
 		result = prime * result + ((horarioFim == null) ? 0 : horarioFim.hashCode());
 		result = prime * result + ((horarioInicio == null) ? 0 : horarioInicio.hashCode());
 		result = prime * result + id;
@@ -90,11 +76,6 @@ public class Periodo implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Periodo other = (Periodo) obj;
-		if (date == null) {
-			if (other.date != null)
-				return false;
-		} else if (!date.equals(other.date))
-			return false;
 		if (horarioFim == null) {
 			if (other.horarioFim != null)
 				return false;
@@ -112,8 +93,6 @@ public class Periodo implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Periodo [id=" + id + ", date=" + date + ", horarioInicio=" + horarioInicio + ", horarioFim="
-				+ horarioFim + "]";
+		return "Periodo [id=" + id + ", horarioInicio=" + horarioInicio + ", horarioFim=" + horarioFim + "]";
 	}
-
 }

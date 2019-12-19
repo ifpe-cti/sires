@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.faces.bean.ManagedBean;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -26,7 +27,7 @@ public class Solicitacao implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, cascade = CascadeType.REMOVE)
 	private Sala sala;
 
 	@Temporal(TemporalType.DATE)
@@ -41,7 +42,7 @@ public class Solicitacao implements Serializable {
 	@Column(nullable = false)
 	private Date horarioFim;
 
-	@ManyToOne(optional = false)
+	@ManyToOne(optional = false, cascade = CascadeType.REMOVE)
 	private Usuario requisitante;
 
 	@Column(nullable = false)

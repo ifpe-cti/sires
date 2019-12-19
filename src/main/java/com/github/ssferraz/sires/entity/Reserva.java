@@ -3,6 +3,7 @@ package com.github.ssferraz.sires.entity;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -21,7 +22,7 @@ public class Reserva implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@OneToOne(optional = false) //, cascade = CascadeType.REMOVE
+	@OneToOne(cascade = CascadeType.REMOVE) //, cascade = CascadeType.REMOVE
 	private Solicitacao solicitacao;
 
 	public Reserva() {

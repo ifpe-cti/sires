@@ -173,7 +173,7 @@ public class SolicitacaoDAO {
 		return lista;
 	}
 
-/*	@SuppressWarnings("unchecked")
+	@SuppressWarnings("unchecked")
 	public List<Solicitacao> verificaDisponibilidade(Solicitacao solicitacao) {
 		EntityManager em = new ConnectionFactory().getConnection();
 		List<Solicitacao> lista = null;
@@ -198,6 +198,6 @@ public class SolicitacaoDAO {
 		} else {
 			return false;	
 		}
-	}*/
+	}
 
 }
