@@ -1,18 +1,31 @@
 package com.github.ssferraz.sires;
 
-import java.util.List;
+import java.util.Date;
 
-import javax.persistence.EntityManager;
-
-import com.github.ssferraz.sires.connection.ConnectionFactory;
+import com.github.ssferraz.sires.dao.SolicitacaoDAO;
 import com.github.ssferraz.sires.entity.Solicitacao;
 
 public class Test {
 
 	public static void main(String[] args) {
 		
-
+	/*	SolicitacaoDAO sol = new SolicitacaoDAO();
 		
+		Solicitacao s = new Solicitacao();
+		
+		Date d = new Date();
+		d.setDate(12);
+		d.setHours(13);
+		d.setMinutes(00);
+		d.setSeconds(00);
+		d.setMonth(11);
+		s.setEvento("Monitoria");
+		s.setData(d);
+		s.setHorarioFim(horarioFim);
+		s.setHorarioInicio(horarioInicio);
+		s.setRequisitante(requisitante);
+		s.set
+		System.out.println(sol.verificaDisponibilidade(s).toString());*/
 		
 	/*	int mes = c.get(Calendar.MONTH);
 		int mesAtual = mes +1;

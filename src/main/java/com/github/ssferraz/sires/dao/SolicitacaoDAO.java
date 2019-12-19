@@ -3,6 +3,7 @@ package com.github.ssferraz.sires.dao;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.Query;
 
 import com.github.ssferraz.sires.connection.ConnectionFactory;
 import com.github.ssferraz.sires.entity.Solicitacao;
@@ -13,7 +14,7 @@ public class SolicitacaoDAO {
 	// Salvar no banco
 	public void save(Solicitacao solicitacao) {
 		EntityManager em = new ConnectionFactory().getConnection();
-
+		System.out.println(solicitacao.getHorarioInicio());
 		try {
 			em.getTransaction().begin();
 			em.persist(solicitacao);
@@ -172,32 +173,37 @@ public class SolicitacaoDAO {
 
 		return lista;
 	}
-
+	
 	@SuppressWarnings("unchecked")
-	public List<Solicitacao> verificaDisponibilidade(Solicitacao solicitacao) {
+	public boolean verificaDisponibilidade(Solicitacao solicitacao) {
 		EntityManager em = new ConnectionFactory().getConnection();
-		List<Solicitacao> lista = null;
+		List<Solicitacao> lista = null;		
+		
+		String sql = "from Reserva r "
+				+ "inner join r.solicitacao as s "
+				+ "inner join s.sala as sl "
+				+ "where s.data = :data "
+				+ "and sl.id = :idSala "
+				+ "and ((s.horarioInicio >= :horarioInicio and s.horarioInicio <= :horarioFim) "
+				+ "or (s.horarioFim >= :horarioInicio and s.horarioFim <= :horarioFim))";
+		
+		System.out.println(sql);
 		try {
-			lista = em.createQuery("from Solicitacao where data = " + solicitacao.getData() + " and sala_id = "
-					+ solicitacao.getSala().getId() + "and ((horarioInicio <= " + solicitacao.getHorarioInicio()
-					+ "and horarioFim 	>= " + solicitacao.getHorarioFim() + ") or (horarioInicio <= "
-					+ solicitacao.getHorarioInicio() + " and horarioFim >= "+ solicitacao.getHorarioFim()+")").getResultList();
+			Query query = em.createQuery(sql);
+			query.setParameter("data", solicitacao.getData());
+			query.setParameter("idSala", solicitacao.getSala().getId());
+			query.setParameter("horarioInicio", solicitacao.getHorarioInicio());
+			query.setParameter("horarioFim", solicitacao.getHorarioFim());
+			lista = query.getResultList();
+			
+			
 		} catch (Exception e) {
 			System.err.println(e);
 		} finally {
 			em.close();
 		}
 
-		return lista;
-	}
-	
-	public boolean ehDisponivel(Solicitacao solicitacao) {
-		List<Solicitacao> lista = verificaDisponibilidade(solicitacao);
-		if(lista.isEmpty()) {
-			return true;
-		} else {
-			return false;	
-		}
+		return lista.isEmpty();
 	}
 
 }

@@ -48,7 +48,7 @@ public class SolicitacaoBean implements Serializable {
 		}
 
 		Date d = new Date();
-		if (solicitacao.getData().getDate() < (d.getDate())) {
+		if (solicitacao.getData().getDate() < (d.getDate()) && (solicitacao.getData().getMonth()+1)<(d.getMonth()+1)) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro!",
 					"A data não pode ser anterior a data de hoje!"));
 			return "";
@@ -69,7 +69,7 @@ public class SolicitacaoBean implements Serializable {
 
 	public String aprovarSolicitacao(Solicitacao solicitacao) {
 		
-	//	if(daoS.ehDisponivel(solicitacao)) {
+		if(daoS.verificaDisponibilidade(solicitacao)) {
 		
 		solicitacao.setStatus("Aprovada");
 
@@ -85,11 +85,11 @@ public class SolicitacaoBean implements Serializable {
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_INFO, "Solicitação aprovada!", "Agora ela é uma reserva!"));
 		return "solicitacoes.xhtml";
-	//	}else {
-	//		FacesContext.getCurrentInstance().addMessage(null,
-	//				new FacesMessage(FacesMessage.SEVERITY_INFO, "Reserva já existe!", "Impossível aprovar!"));
-	//		return "solicitacoes.xhtml";
-	//	}
+		}else {
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Reserva já existe!", "Impossível aprovar!"));
+			return "solicitacoes.xhtml";
+		}
 
 
 	}

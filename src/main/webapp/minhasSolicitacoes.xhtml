@@ -76,54 +76,11 @@
 					<h:outputText value="#{(solicitacao.status)}" />
 				</p:column>
 
-			<!--	<p:column headerText="Aprovar?" width="15%">
-					<p:commandButton title="Aprovar" value="S"
-						oncomplete="PF('confirmationA').show();" update=":form:confirmA">
-						<f:setPropertyActionListener value="#{solicitacao}"
-							target="#{solicitacaoBean.solicitacao}" />
-					</p:commandButton>
-
-					<p:commandButton title="Reprovar" value="N"
-						oncomplete="PF('confirmationN').show();" update=":form:confirmN">
-						<f:setPropertyActionListener value="#{solicitacao}"
-							target="#{solicitacaoBean.solicitacao}" />
-					</p:commandButton>
-				</p:column>
-				-->
+			
 			</p:dataTable>
 		</p:panel>
 
-		<!--<p:dialog id="confirmA" appendToBody="true" closable="false"
-			resizable="false" modal="true" widgetVar="confirmationA">
-			<h:outputText
-				value="Tem certeza de que quer aprovar essa solicitação?" />
-			<br />
-			<center>
-				<p:commandButton value="Sim"
-					action="#{solicitacaoBean.aprovarSolicitacao(solicitacaoBean.solicitacao)}"
-					ajax="false" update=":form"
-					oncomplete="PF('confirmationA').hide();" />
-				<p:commandButton value="Não"
-					oncomplete="PF('confirmationA').hide();" />
-			</center>
-		</p:dialog>
-  -->
-  <!--
-		<p:dialog id="confirmN" appendToBody="true" closable="false"
-			resizable="false" modal="true" widgetVar="confirmationN">
-			<h:outputText
-				value="Tem certeza de que quer reprovar essa solicitação?" />
-			<br />
-			<center>
-				<p:commandButton value="Sim"
-					action="#{solicitacaoBean.reprovarSolicitacao(solicitacaoBean.solicitacao)}"
-					ajax="false" update=":form"
-					oncomplete="PF('confirmationN').hide();" />
-				<p:commandButton value="Não"
-					oncomplete="PF('confirmationN').hide();" />
-			</center>
-		</p:dialog>
-	-->
+		
 	</h:form>
 </h:body>
 </html>
